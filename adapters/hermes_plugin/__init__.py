@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 
 
 ADAPTER_ID = "hermes"
-ADAPTER_VERSION = "0.1.2"
+ADAPTER_VERSION = "0.2.0"
 _LIFECYCLE_METHODS = ("launch", "status", "wait", "cancel", "result", "reconnect")
 
 CAPABILITIES_SCHEMA = {

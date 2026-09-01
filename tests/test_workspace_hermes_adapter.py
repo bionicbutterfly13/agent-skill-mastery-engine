@@ -300,7 +300,7 @@ assert [item["name"] for item in context.tools] == ["wikiskill_capabilities"]
     )
     assert result.returncode == 0, result.stderr
     manifest = plugin_path.with_name("plugin.yaml").read_text(encoding="utf-8")
-    assert '"agent-skill-mastery-engine>=0.1.0,<0.2"' in manifest
+    assert '"agent-skill-mastery-engine>=0.2.0,<0.3"' in manifest
 
 
 def test_hermes_adapter_probes_lifecycle_from_active_plugin_context() -> None:

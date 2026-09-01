@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0
 
 - Renamed the project from Askesis to Agent Skill Mastery Engine. The PyPI
   distribution name changed from `askesis-agent-skill-mastery-engine` to
