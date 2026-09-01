@@ -6,27 +6,27 @@ from pathlib import Path
 
 import pytest
 
-from askesis.adapter import ProviderPolicy
-from askesis.canonical import sha256_bytes
-from askesis.cartridge import DomainCartridge
-from askesis.contract import (
+from asme.adapter import ProviderPolicy
+from asme.canonical import sha256_bytes
+from asme.cartridge import DomainCartridge
+from asme.contract import (
     ApprovalRecord,
     CapabilityReport,
     LifecycleState,
     Route,
 )
-from askesis.delivery import DeliveryWorkflow
-from askesis.domain import load_declared_domain
-from askesis.evidence import captured_execution
-from askesis.lifecycle import TransitionRefused
-from askesis.package import (
+from asme.delivery import DeliveryWorkflow
+from asme.domain import load_declared_domain
+from asme.evidence import captured_execution
+from asme.lifecycle import TransitionRefused
+from asme.package import (
     Compatibility,
     build_archive,
     build_projection_from_files,
 )
-from askesis.snapshot import Snapshot
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.snapshot import Snapshot
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 _SCORES = {0.25: 1, 0.5: 2, 0.75: 3, 1.0: 4}
@@ -315,7 +315,7 @@ class TerminalHarness:
 
     def compatibility(self) -> Compatibility:
         return Compatibility(
-            contract_version="askesis.contract.v1",
+            contract_version="asme.contract.v1",
             core_version="0.1.0",
             package_version="0.1.0",
             adapter_id=self.report.runtime_id,

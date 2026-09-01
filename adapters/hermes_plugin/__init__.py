@@ -1,4 +1,4 @@
-"""Thin Hermes adapter for Askesis.
+"""Thin Hermes adapter for Agent Skill Mastery Engine.
 
 This user plugin does not patch Hermes internals, observe ambient sessions, or
 dispatch a role through a provider fallback it cannot lock.  It exposes the
@@ -14,17 +14,17 @@ import json
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from askesis.contract import CapabilityReport
+    from asme.contract import CapabilityReport
 
 
 ADAPTER_ID = "hermes"
-ADAPTER_VERSION = "0.1.2"
+ADAPTER_VERSION = "0.2.0"
 _LIFECYCLE_METHODS = ("launch", "status", "wait", "cancel", "result", "reconnect")
 
 CAPABILITIES_SCHEMA = {
     "name": "wikiskill_capabilities",
     "description": (
-        "Report measured Askesis adapter capabilities. This is read-only and "
+        "Report measured Agent Skill Mastery Engine adapter capabilities. This is read-only and "
         "does not run evolution, inspect session history, stage files, or install skills."
     ),
     "parameters": {"type": "object", "properties": {}, "additionalProperties": False},
@@ -34,7 +34,7 @@ CAPABILITIES_SCHEMA = {
 def capability_report(context: Any | None = None) -> CapabilityReport:
     """Return the conservative report supported by current public Hermes APIs."""
 
-    from askesis.contract import CapabilityEvidence, CapabilityReport
+    from asme.contract import CapabilityEvidence, CapabilityReport
 
     try:
         from hermes_cli import __version__ as runtime_version
@@ -118,9 +118,9 @@ def register(ctx: Any) -> None:
 
     ctx.register_tool(
         name="wikiskill_capabilities",
-        toolset="askesis",
+        toolset="asme",
         schema=CAPABILITIES_SCHEMA,
         handler=partial(_handle_capabilities, context=ctx),
-        description="Read-only Askesis capability report.",
+        description="Read-only Agent Skill Mastery Engine capability report.",
         emoji="🧪",
     )

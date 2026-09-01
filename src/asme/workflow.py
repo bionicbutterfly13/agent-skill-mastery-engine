@@ -53,11 +53,11 @@ from .wiki import TraceView, sample_traces, validate_maintainer_change, validate
 from .workspace import DomainWorkspace
 
 
-RUN_SCHEMA = "askesis.run.v1"
-JOB_SCHEMA = "askesis.job.v1"
-IMPACT_SCHEMA = "askesis.impact-history.v1"
-CANDIDATE_SCHEMA = "askesis.candidate.v1"
-SEED_MANIFEST_SCHEMA = "askesis.seed-manifest.v1"
+RUN_SCHEMA = "asme.run.v1"
+JOB_SCHEMA = "asme.job.v1"
+IMPACT_SCHEMA = "asme.impact-history.v1"
+CANDIDATE_SCHEMA = "asme.candidate.v1"
+SEED_MANIFEST_SCHEMA = "asme.seed-manifest.v1"
 
 
 @dataclass(frozen=True)
@@ -1101,7 +1101,7 @@ class EvolutionWorkflow:
         )
         payload.update(
             {
-                "schema": "askesis.proposer-context.v1",
+                "schema": "asme.proposer-context.v1",
                 "source_class": "ARCHITECTURE",
                 "iteration": state.iteration,
                 "active_snapshot_hash": snapshot.snapshot_hash,

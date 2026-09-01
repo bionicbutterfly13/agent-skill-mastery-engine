@@ -10,17 +10,17 @@ import re
 
 import pytest
 
-from askesis.canonical import ContractError, canonical_bytes
-from askesis.claims import (
+from asme.canonical import ContractError, canonical_bytes
+from asme.claims import (
     BootstrapEvidence,
     ClaimClass,
     RunEvidence,
     evaluate_claim,
 )
-from askesis.contract import TraceFidelity
-from askesis.dependencies import DependencyKind, default_dependency_matrix
-from askesis.gate2 import DEFAULT_GATE2_POLICY, compare_gate2
-from askesis.governance import (
+from asme.contract import TraceFidelity
+from asme.dependencies import DependencyKind, default_dependency_matrix
+from asme.gate2 import DEFAULT_GATE2_POLICY, compare_gate2
+from asme.governance import (
     DEVELOPMENT_DECISIONS,
     DecisionStatus,
     HISTORICAL_PLAN_REVISION,
@@ -29,17 +29,17 @@ from askesis.governance import (
     PAPER_ATTRIBUTION,
     require_phase_authorized,
 )
-from askesis.impact import ImpactOutcome, append_impact, create_impact
-from askesis.lifecycle import DomainState, TransitionInput, transition
-from askesis.contract import LifecycleState
-from askesis.snapshot import Snapshot
-from askesis.transaction import RecoveryCorruption, SimulatedCrash
-from askesis.source_registry import (
+from asme.impact import ImpactOutcome, append_impact, create_impact
+from asme.lifecycle import DomainState, TransitionInput, transition
+from asme.contract import LifecycleState
+from asme.snapshot import Snapshot
+from asme.transaction import RecoveryCorruption, SimulatedCrash
+from asme.source_registry import (
     PUBLIC_ARTIFACTS,
     default_source_registry,
     default_source_registry_bytes,
 )
-from askesis.package import scan_community_safety
+from asme.package import scan_community_safety
 from test_terminal_paths import TerminalHarness
 
 
@@ -207,10 +207,10 @@ def test_hf_a03_adapters_do_not_fork_core_semantics() -> None:
         tree = ast.parse(path.read_text(encoding="utf-8"))
         for node in ast.walk(tree):
             if isinstance(node, ast.ImportFrom) and node.module and node.module.startswith(
-                "askesis."
+                "asme."
             ):
                 imported_core_modules.add(node.module)
-    assert imported_core_modules == {"askesis.contract"}
+    assert imported_core_modules == {"asme.contract"}
 
 
 def test_hf_a04_paper_lifecycle_and_impact_history_are_retained() -> None:
@@ -571,8 +571,8 @@ def test_hf_a18_every_matrix_operation_has_a_real_binding_path() -> None:
     package_root = Path(__file__).parents[1]
     bound: set[str] = set()
     for relative in (
-        "src/askesis/workflow.py",
-        "src/askesis/delivery.py",
+        "src/asme/workflow.py",
+        "src/asme/delivery.py",
     ):
         tree = ast.parse((package_root / relative).read_text(encoding="utf-8"))
         for node in ast.walk(tree):

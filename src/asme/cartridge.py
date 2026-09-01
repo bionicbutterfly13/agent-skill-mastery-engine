@@ -12,7 +12,7 @@ from .domain import DeclaredDomain
 from .transaction import PlannedWrite
 
 
-CARTRIDGE_SCHEMA = "askesis.cartridge.v1"
+CARTRIDGE_SCHEMA = "asme.cartridge.v1"
 
 
 @dataclass(frozen=True)

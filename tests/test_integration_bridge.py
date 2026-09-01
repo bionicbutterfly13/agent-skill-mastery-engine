@@ -5,16 +5,16 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.contract import LifecycleState, Route
-from askesis.impact import ImpactOutcome, create_impact
-from askesis.integration import (
+from asme.canonical import ContractError
+from asme.contract import LifecycleState, Route
+from asme.impact import ImpactOutcome, create_impact
+from asme.integration import (
     HYBRID_BENEFIT_DISPOSITIONS,
     build_observation_candidate,
     validate_skill_authoring,
 )
-from askesis.lifecycle import DomainState
-from askesis.snapshot import Snapshot
+from asme.lifecycle import DomainState
+from asme.snapshot import Snapshot
 
 
 def _skill() -> bytes:
@@ -148,7 +148,7 @@ def test_public_integration_contract_preserves_every_hybrid_benefit() -> None:
         assert f"`{benefit}`" in text
         assert f"`{disposition}`" in text
 
-    assert "askesis observation-candidate" in text
+    assert "asme observation-candidate" in text
     assert "pending_human_review" in text
     assert "shared_log_write_allowed" in text
     assert "immediate authoring" in text

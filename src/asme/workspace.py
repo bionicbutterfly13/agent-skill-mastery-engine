@@ -42,7 +42,7 @@ from .transaction import (
 )
 
 
-WORKSPACE_SCHEMA = "askesis.workspace.v1"
+WORKSPACE_SCHEMA = "asme.workspace.v1"
 NON_TRANSITION_OPERATIONS = frozenset(
     {"prepare-rollout", "record-execution", "ingest-rollout", "sample", "proposer-context"}
 )
@@ -60,7 +60,7 @@ class WorkspaceLayout:
         canonical = root.resolve(strict=False)
         return cls(
             domain_root=canonical,
-            control_root=canonical.parent / ".askesis-control",
+            control_root=canonical.parent / ".asme-control",
             staging_root=canonical / "staging",
             archive_root=canonical / "archives",
         )

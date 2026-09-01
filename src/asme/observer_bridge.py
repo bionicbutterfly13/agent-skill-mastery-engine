@@ -1,6 +1,6 @@
 """Approval-bound, file-drop-only Task Observer review packets.
 
-This bridge renders a gated Askesis candidate skill as a review packet a human
+This bridge renders a gated Agent Skill Mastery Engine candidate skill as a review packet a human
 can hand to Task Observer. It never installs anything, never writes a shared
 observation log, and only ever creates one new directory that must not exist.
 """
@@ -22,7 +22,7 @@ from .canonical import (
 from .contract import ApprovalRecord
 from .integration import validate_skill_authoring
 
-OBSERVER_PACKET_SCHEMA = "askesis.observer-review-packet.v1"
+OBSERVER_PACKET_SCHEMA = "asme.observer-review-packet.v1"
 OBSERVER_REVIEW_PHASE = "task-observer-review-packet"
 
 
@@ -127,7 +127,7 @@ def build_observer_review_packet(
     return packet
 
 
-PACKET_VERIFICATION_SCHEMA = "askesis.packet-verification.v1"
+PACKET_VERIFICATION_SCHEMA = "asme.packet-verification.v1"
 _EXPECTED_HANDLING = {
     "write_mode": "file_drop_create_only",
     "shared_observation_log_write": "forbidden",

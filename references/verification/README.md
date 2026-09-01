@@ -35,7 +35,7 @@
 - Hermes Agent 0.20.5's official `plugins doctor --ci` runtime path discovered the
   standalone manifest, imported `__init__.py`, registered exactly one declared tool and
   zero hooks, and reported no errors. The uninstalled checkout produces the expected
-  warning for its declared `askesis` Python dependency; Hermes does not install
+  warning for its declared `asme` Python dependency; Hermes does not install
   it automatically. A separate isolated test harness using the Doctor's
   temporary-runtime context invoked that registered tool and measured the public
   lifecycle surface as present, the fail-closed provider route lock as absent, the

@@ -11,8 +11,8 @@ from typing import Any, Mapping, Sequence
 from .canonical import ContractError, hash_json, require_identifier
 
 
-CONTRACT_VERSION = "askesis.contract.v1"
-ADAPTER_PORT_VERSION = "askesis.adapter.v1"
+CONTRACT_VERSION = "asme.contract.v1"
+ADAPTER_PORT_VERSION = "asme.adapter.v1"
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 
 

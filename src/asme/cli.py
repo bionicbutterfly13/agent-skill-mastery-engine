@@ -31,14 +31,19 @@ from .package import (
     read_bundle_manifest,
     verify_archive,
 )
+from .skill_install import install_skill
 from .workflow import EvolutionWorkflow
 from .workspace import DomainWorkspace, WorkspaceLayout
 
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="askesis",
-        description="Runtime-neutral WikiSkill core. No command installs a live skill.",
+        prog="asme",
+        description=(
+            "Runtime-neutral WikiSkill core. Evolved candidates are staged, never "
+            "installed; only `install` writes a skill directory, and it copies just "
+            "Agent Skill Mastery Engine's own skill."
+        ),
     )
     parser.add_argument("--version", action="version", version=__version__)
     subcommands = parser.add_subparsers(dest="command", required=True)
@@ -220,6 +225,33 @@ def _parser() -> argparse.ArgumentParser:
     verify_packet.add_argument("--packet", type=Path, required=True)
     verify_packet.set_defaults(handler=_verify_packet)
 
+    install = subcommands.add_parser(
+        "install",
+        help="Copy Agent Skill Mastery Engine's own skill files into a Claude Code skill directory",
+        description=(
+            "Install only Agent Skill Mastery Engine's own agent skill (SKILL.md and companions). Sources "
+            "under a staging or archive root and staged bundles are refused; evolved "
+            "candidates are never installed by this command."
+        ),
+    )
+    install.add_argument(
+        "--target",
+        type=Path,
+        help="Skill directory to create (default: ~/.claude/skills/asme)",
+    )
+    install.add_argument(
+        "--source",
+        type=Path,
+        help="Checkout holding Agent Skill Mastery Engine's SKILL.md; staging and archive roots are refused",
+    )
+    install.add_argument(
+        "--force", action="store_true", help="Replace an existing asme skill directory"
+    )
+    install.add_argument(
+        "--dry-run", action="store_true", help="Print the plan without writing anything"
+    )
+    install.set_defaults(handler=_install)
+
     status = subcommands.add_parser("status", help="Read one domain state without recovery")
     _workspace_arguments(status)
     status.set_defaults(handler=_status)
@@ -286,7 +318,7 @@ def _candidate_manifest(args: argparse.Namespace) -> Any:
     )
     manifest = read_bundle_manifest(projection)
     return {
-        "schema": "askesis.candidate-manifest.v1",
+        "schema": "asme.candidate-manifest.v1",
         "status": manifest["status"],
         "license_policy": manifest["license_policy"],
         "tree_sha256": projection.tree_sha256,
@@ -516,6 +548,15 @@ def _verify_packet(args: argparse.Namespace) -> Any:
     return verify_observer_review_packet(args.packet)
 
 
+def _install(args: argparse.Namespace) -> Any:
+    return install_skill(
+        target=args.target,
+        source=args.source,
+        force=args.force,
+        dry_run=args.dry_run,
+    )
+
+
 def _status(args: argparse.Namespace) -> Any:
     return asdict(_workspace(args).status())
 
@@ -574,7 +615,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.buffer.write(canonical_bytes(result))
         return 0
     except (ContractError, OSError) as exc:
-        sys.stderr.write(f"askesis: {exc}\n")
+        sys.stderr.write(f"asme: {exc}\n")
         return 2
 
 

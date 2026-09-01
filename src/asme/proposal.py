@@ -10,7 +10,7 @@ from .canonical import ContractError, hash_json, require_identifier, safe_member
 from .snapshot import Snapshot
 
 
-PROPOSAL_SCHEMA = "askesis.proposal.v1"
+PROPOSAL_SCHEMA = "asme.proposal.v1"
 
 
 @dataclass(frozen=True)

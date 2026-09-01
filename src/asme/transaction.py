@@ -31,9 +31,9 @@ from .canonical import (
 from .dependencies import default_dependency_matrix
 
 
-TRANSACTION_SCHEMA_V1 = "askesis.transaction.v1"
-TRANSACTION_SCHEMA = "askesis.transaction.v2"
-INITIALIZATION_SCHEMA = "askesis.initialization-intent.v1"
+TRANSACTION_SCHEMA_V1 = "asme.transaction.v1"
+TRANSACTION_SCHEMA = "asme.transaction.v2"
+INITIALIZATION_SCHEMA = "asme.initialization-intent.v1"
 
 
 class PendingTransaction(ContractError):
@@ -836,7 +836,7 @@ class TransactionEngine:
 
     @staticmethod
     def _root_fingerprint(path: Path) -> str:
-        return sha256_bytes(b"askesis.root.v1\0" + os.fsencode(path))
+        return sha256_bytes(b"asme.root.v1\0" + os.fsencode(path))
 
     @staticmethod
     def _require_mapping(value: Any) -> Mapping[str, Any]:

@@ -4,16 +4,16 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import sha256_bytes, tree_manifest
-from askesis.lifecycle import OPERATIONS
-from askesis.transaction import (
+from asme.canonical import sha256_bytes, tree_manifest
+from asme.lifecycle import OPERATIONS
+from asme.transaction import (
     PendingTransaction,
     PlannedDeletion,
     PlannedWrite,
     SimulatedCrash,
     TransactionEngine,
 )
-from askesis.workspace import NON_TRANSITION_OPERATIONS
+from asme.workspace import NON_TRANSITION_OPERATIONS
 
 
 FIXED_CLOCK = "2026-08-31T12:34:56+00:00"

@@ -36,7 +36,7 @@ OPERATIONS = (
     "status",
 )
 
-STATE_SCHEMA = "askesis.state.v1"
+STATE_SCHEMA = "asme.state.v1"
 
 
 @dataclass(frozen=True)

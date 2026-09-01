@@ -4,8 +4,8 @@ from dataclasses import replace
 
 import pytest
 
-from askesis.contract import LifecycleState, Route
-from askesis.lifecycle import (
+from asme.contract import LifecycleState, Route
+from asme.lifecycle import (
     OPERATIONS,
     DomainState,
     TransitionInput,

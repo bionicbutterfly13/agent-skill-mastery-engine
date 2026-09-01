@@ -17,7 +17,7 @@ from .canonical import ContractError, canonical_bytes, sha256_bytes
 from .claims import BootstrapEvidence
 from .evalreport import EvalRun
 
-BOOTSTRAP_SCHEMA = "askesis.paired-bootstrap.v1"
+BOOTSTRAP_SCHEMA = "asme.paired-bootstrap.v1"
 COMPLETE_RESAMPLES = 1000
 _METHOD = "paired-task-bootstrap-sha256"
 

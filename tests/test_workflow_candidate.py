@@ -5,14 +5,14 @@ from pathlib import Path
 
 import pytest
 
-from askesis.adapter import ProviderPolicy
-from askesis.canonical import sha256_bytes
-from askesis.cartridge import DomainCartridge
-from askesis.contract import CapabilityReport, LifecycleState
-from askesis.domain import load_declared_domain
-from askesis.evidence import captured_execution
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.adapter import ProviderPolicy
+from asme.canonical import sha256_bytes
+from asme.cartridge import DomainCartridge
+from asme.contract import CapabilityReport, LifecycleState
+from asme.domain import load_declared_domain
+from asme.evidence import captured_execution
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def _capture(prepared, report: CapabilityReport, output: str):

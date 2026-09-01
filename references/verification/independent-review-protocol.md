@@ -1,6 +1,6 @@
 # Independent review protocol
 
-This protocol lets a reviewer assess Askesis without installing it, changing
+This protocol lets a reviewer assess Agent Skill Mastery Engine without installing it, changing
 the candidate, or treating self-authored ledgers as proof.
 
 ## Reviewer independence
@@ -60,7 +60,7 @@ Run from the candidate package root:
 python -m pytest -q
 python -m compileall -q src adapters scripts tests
 python scripts/stdlib_smoke.py
-PYTHONPATH=src python -m askesis --version
+PYTHONPATH=src python -m asme --version
 ```
 
 Expected current local evidence:
@@ -85,7 +85,7 @@ a staged tree or archive. Set the three task-specific variables to reviewer-supp
 paths, then record the exact stdout in the review record:
 
 ```bash
-PYTHONPATH=src python -m askesis candidate-manifest \
+PYTHONPATH=src python -m asme candidate-manifest \
   --source-root "$REVIEW_CANDIDATE_SOURCE" \
   --compatibility "$REVIEW_COMPATIBILITY_RECORD" \
   --attribution "$REVIEW_ATTRIBUTION_RECORD"
@@ -102,7 +102,7 @@ hermes plugins doctor --ci adapters/hermes_plugin
 ```
 
 Require one registered tool, zero hooks, and no errors. In an uninstalled source checkout,
-record the expected warning that the declared `askesis` Python dependency is
+record the expected warning that the declared `asme` Python dependency is
 missing. Hermes must not install it automatically. Invoke
 `wikiskill_capabilities` only when the exact Hermes version supplies a documented,
 isolated handler-invocation path. Require `live_mutation: false`, a

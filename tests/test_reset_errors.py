@@ -5,13 +5,13 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError, canonical_bytes, tree_manifest
-from askesis.contract import LifecycleState
-from askesis.lifecycle import TransitionInput, TransitionRefused
-from askesis.manifest import RolloutManifest
-from askesis.snapshot import Snapshot
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import (
+from asme.canonical import ContractError, canonical_bytes, tree_manifest
+from asme.contract import LifecycleState
+from asme.lifecycle import TransitionInput, TransitionRefused
+from asme.manifest import RolloutManifest
+from asme.snapshot import Snapshot
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import (
     DomainWorkspace,
     WorkspaceLayout,
     _state_json,

@@ -6,15 +6,15 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import tree_manifest
-from askesis.cli import _parser, main
-from askesis.contract import LifecycleState
-from askesis.evaluation import (
+from asme.canonical import tree_manifest
+from asme.cli import _parser, main
+from asme.contract import LifecycleState
+from asme.evaluation import (
     EVALUATION_TIMEOUT_SECONDS,
     evaluate_output,
 )
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def test_cli_exposes_one_core_command_for_each_workflow_operation() -> None:
@@ -48,6 +48,7 @@ def test_cli_exposes_one_core_command_for_each_workflow_operation() -> None:
         "candidate-manifest",
         "observation-candidate",
         "transition-matrix",
+        "install",
     }
 
 
@@ -154,8 +155,8 @@ def test_candidate_manifest_is_stdout_only_and_byte_stable(
     compatibility.write_text(
         json.dumps(
             {
-                "schema": "askesis.compatibility.v1",
-                "contract_version": "askesis.contract.v1",
+                "schema": "asme.compatibility.v1",
+                "contract_version": "asme.contract.v1",
                 "core_version": "0.1.0",
                 "package_version": "0.1.0",
                 "adapter_id": "hermes",
@@ -185,7 +186,7 @@ def test_candidate_manifest_is_stdout_only_and_byte_stable(
 
     assert main(command) == 0
     first = json.loads(capsys.readouterr().out)
-    assert first["schema"] == "askesis.candidate-manifest.v1"
+    assert first["schema"] == "asme.candidate-manifest.v1"
     assert first["file_count"] == 3
     assert [item["path"] for item in first["files"]] == [
         "README.md",

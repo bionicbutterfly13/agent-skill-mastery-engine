@@ -11,14 +11,14 @@ import tempfile
 _PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_PACKAGE_ROOT / "src"))
 
-from askesis.adapter import ProviderPolicy
-from askesis.canonical import canonical_bytes
-from askesis.cartridge import DomainCartridge
-from askesis.contract import CapabilityReport, LifecycleState
-from askesis.domain import load_declared_domain
-from askesis.evidence import captured_execution
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.adapter import ProviderPolicy
+from asme.canonical import canonical_bytes
+from asme.cartridge import DomainCartridge
+from asme.contract import CapabilityReport, LifecycleState
+from asme.domain import load_declared_domain
+from asme.evidence import captured_execution
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def _write_jsonl(path: Path, rows: list[dict]) -> None:
@@ -29,7 +29,7 @@ def _write_jsonl(path: Path, rows: list[dict]) -> None:
 
 
 def main() -> int:
-    with tempfile.TemporaryDirectory(prefix="askesis-smoke-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="asme-smoke-") as temporary:
         root = Path(temporary)
         tasks = root / "tasks.jsonl"
         answers = root / "answers.jsonl"

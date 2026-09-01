@@ -7,7 +7,7 @@ remains owner-gated (Gate 4); no public release has occurred.
 For local review work:
 
 1. Create an isolated branch and linked worktree from the verified integration branch.
-2. Keep runtime-neutral semantics in `src/askesis`.
+2. Keep runtime-neutral semantics in `src/asme`.
 3. Keep runtime adapters thin. Do not copy lifecycle, scoring, gate, or transaction code
    into an adapter.
 4. Add a failing test before changing behavior.

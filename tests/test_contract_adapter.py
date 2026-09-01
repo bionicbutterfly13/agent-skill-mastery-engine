@@ -6,9 +6,9 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from askesis.adapter import DispatchRefused, ProviderPolicy, prepare_job
-from askesis.canonical import ContractError
-from askesis.contract import (
+from asme.adapter import DispatchRefused, ProviderPolicy, prepare_job
+from asme.canonical import ContractError
+from asme.contract import (
     ApprovalRecord,
     CapabilityReport,
     CapturedExecution,
@@ -19,7 +19,7 @@ from askesis.contract import (
     capability_report_from_mapping,
     captured_execution_from_mapping,
 )
-from askesis.evidence import role_spec
+from asme.evidence import role_spec
 
 
 def _report(events: tuple[str, ...]) -> CapabilityReport:

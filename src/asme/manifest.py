@@ -11,7 +11,7 @@ from .domain import DeclaredDomain, marker_propagated
 from .evaluation import EvaluationResult, aggregate_scores
 
 
-ROLLOUT_MANIFEST_SCHEMA = "askesis.rollout-manifest.v1"
+ROLLOUT_MANIFEST_SCHEMA = "asme.rollout-manifest.v1"
 
 
 @dataclass(frozen=True)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from askesis.evaluation import evaluate_output
+from asme.evaluation import evaluate_output
 
 
 def test_builtin_answer_tag_and_exact_match_programs_are_real_subprocesses() -> None:

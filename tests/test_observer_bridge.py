@@ -6,9 +6,9 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError, sha256_bytes
-from askesis.contract import ApprovalRecord
-from askesis.observer_bridge import (
+from asme.canonical import ContractError, sha256_bytes
+from asme.contract import ApprovalRecord
+from asme.observer_bridge import (
     OBSERVER_PACKET_SCHEMA,
     OBSERVER_REVIEW_PHASE,
     PACKET_VERIFICATION_SCHEMA,
@@ -191,7 +191,7 @@ def test_verify_refuses_manifest_shape_violations(tmp_path: Path) -> None:
     rewrite(missing_field)
     with pytest.raises(ContractError, match="fields differ"):
         verify_observer_review_packet(target)
-    rewrite({**original, "schema": "askesis.other.v1"})
+    rewrite({**original, "schema": "asme.other.v1"})
     with pytest.raises(ContractError, match="schema differs"):
         verify_observer_review_packet(target)
     rewrite({**original, "handling": {**original["handling"], "installation": "auto"}})

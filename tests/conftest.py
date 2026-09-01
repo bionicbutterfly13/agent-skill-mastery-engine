@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from askesis.domain import DeclaredDomain, load_declared_domain
+from asme.domain import DeclaredDomain, load_declared_domain
 
 
 @pytest.fixture

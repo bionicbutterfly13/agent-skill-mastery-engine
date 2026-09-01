@@ -9,7 +9,7 @@ from typing import Iterable, Mapping, Sequence
 from .canonical import ContractError, hash_json, require_identifier
 
 
-DEPENDENCY_MATRIX_VERSION = "askesis.dependencies.v1"
+DEPENDENCY_MATRIX_VERSION = "asme.dependencies.v1"
 
 
 class DependencyKind(StrEnum):

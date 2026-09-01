@@ -5,13 +5,13 @@ from pathlib import Path
 
 import pytest
 
-from askesis.adapter import ProviderPolicy
-from askesis.canonical import ContractError, canonical_bytes, sha256_bytes
-from askesis.cartridge import DomainCartridge
-from askesis.contract import CapabilityReport, LifecycleState
-from askesis.evidence import captured_execution
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.adapter import ProviderPolicy
+from asme.canonical import ContractError, canonical_bytes, sha256_bytes
+from asme.cartridge import DomainCartridge
+from asme.contract import CapabilityReport, LifecycleState
+from asme.evidence import captured_execution
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def _cartridge(tmp_path: Path, declared_domain) -> DomainCartridge:
@@ -140,7 +140,7 @@ def test_real_core_baseline_train_and_sample_path(
         "print('1' if p['prediction']==p['expected'] else '0')\n",
         encoding="utf-8",
     )
-    from askesis.domain import load_declared_domain
+    from asme.domain import load_declared_domain
 
     domain = load_declared_domain(
         domain_id=declared_domain.domain_id,
