@@ -9,8 +9,8 @@ import zipfile
 
 import pytest
 
-from askesis.integration import validate_skill_authoring
-from askesis.skill_assets import (
+from asme.integration import validate_skill_authoring
+from asme.skill_assets import (
     PACKAGED_SUBDIRECTORY,
     SKILL_DIRECTORIES,
     SKILL_FILES,
@@ -24,7 +24,7 @@ _REPO_ROOT = Path(__file__).resolve().parents[1]
 _BUILD_NOISE = (".git", ".venv", "build", "dist", "__pycache__", ".pytest_cache", "*.egg-info")
 
 
-def test_skill_root_holds_askesis_own_skill_and_every_companion() -> None:
+def test_skill_root_holds_asme_own_skill_and_every_companion() -> None:
     root = skill_root()
     assert root.is_dir() and not root.is_symlink()
     for name in SKILL_FILES:
@@ -34,7 +34,7 @@ def test_skill_root_holds_askesis_own_skill_and_every_companion() -> None:
     metadata = validate_skill_authoring(
         (root / "SKILL.md").read_bytes(), expected_name=SKILL_NAME
     )
-    assert metadata.name == "askesis"
+    assert metadata.name == "asme"
 
 
 def test_skill_files_are_sorted_relative_posix_paths_with_references() -> None:
@@ -94,11 +94,11 @@ def test_built_wheel_carries_the_skill_files(tmp_path: Path) -> None:
     with zipfile.ZipFile(wheel) as archive:
         names = set(archive.namelist())
         packaged = {
-            name[len(f"askesis/{PACKAGED_SUBDIRECTORY}/") :]
+            name[len(f"asme/{PACKAGED_SUBDIRECTORY}/") :]
             for name in names
-            if name.startswith(f"askesis/{PACKAGED_SUBDIRECTORY}/")
+            if name.startswith(f"asme/{PACKAGED_SUBDIRECTORY}/")
         }
         assert packaged == set(skill_files(_REPO_ROOT))
-        assert archive.read(f"askesis/{PACKAGED_SUBDIRECTORY}/SKILL.md") == (
+        assert archive.read(f"asme/{PACKAGED_SUBDIRECTORY}/SKILL.md") == (
             _REPO_ROOT / "SKILL.md"
         ).read_bytes()

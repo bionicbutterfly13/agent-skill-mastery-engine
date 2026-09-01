@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Copy Askesis's own agent skill into a Claude Code skill directory.
+"""Copy Agent Skill Mastery Engine's own agent skill into a Claude Code skill directory.
 
-Standard library only. Mirrors ``askesis install``: it copies just the packaged
+Standard library only. Mirrors ``asme install``: it copies just the packaged
 SKILL.md and companions, refuses staging and archive sources, and never installs an
 evolved candidate. Prints one JSON object like the rest of the CLI.
 """
@@ -13,33 +13,33 @@ from pathlib import Path
 import sys
 
 _PACKAGE_ROOT = Path(__file__).resolve().parents[1]
-if (_PACKAGE_ROOT / "src" / "askesis").is_dir():
+if (_PACKAGE_ROOT / "src" / "asme").is_dir():
     sys.path.insert(0, str(_PACKAGE_ROOT / "src"))
 
-from askesis.canonical import ContractError, canonical_bytes
-from askesis.skill_install import install_skill
+from asme.canonical import ContractError, canonical_bytes
+from asme.skill_install import install_skill
 
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="install_claude_skill.py",
         description=(
-            "Install Askesis's own skill (SKILL.md and companions) for Claude Code. "
+            "Install Agent Skill Mastery Engine's own skill (SKILL.md and companions) for Claude Code. "
             "Evolved candidates are never installed."
         ),
     )
     parser.add_argument(
         "--target",
         type=Path,
-        help="Skill directory to create (default: ~/.claude/skills/askesis)",
+        help="Skill directory to create (default: ~/.claude/skills/asme)",
     )
     parser.add_argument(
         "--source",
         type=Path,
-        help="Checkout holding Askesis's SKILL.md; staging and archive roots are refused",
+        help="Checkout holding Agent Skill Mastery Engine's SKILL.md; staging and archive roots are refused",
     )
     parser.add_argument(
-        "--force", action="store_true", help="Replace an existing askesis skill directory"
+        "--force", action="store_true", help="Replace an existing asme skill directory"
     )
     parser.add_argument(
         "--dry-run", action="store_true", help="Print the plan without writing anything"

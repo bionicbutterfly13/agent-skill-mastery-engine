@@ -5,10 +5,10 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.evalreport import EVAL_REPORT_SCHEMA, eval_report_bytes
-from askesis.evolution_eval import run_evolution_evaluation
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.canonical import ContractError
+from asme.evalreport import EVAL_REPORT_SCHEMA, eval_report_bytes
+from asme.evolution_eval import run_evolution_evaluation
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 _ASSETS = Path(__file__).resolve().parents[1] / "assets" / "eval"
 

@@ -1,4 +1,4 @@
-include CITATION.cff SKILL.md PURPOSE.md NOTICE.md PROVENANCE.md CONTRIBUTING.md SECURITY.md
+include CITATION.cff CHANGELOG.md SKILL.md PURPOSE.md NOTICE.md PROVENANCE.md CONTRIBUTING.md SECURITY.md
 recursive-include adapters *.py *.yaml *.md
 recursive-include assets *.tmpl
 recursive-include docs *.md

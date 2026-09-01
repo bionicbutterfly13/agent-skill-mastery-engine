@@ -15,7 +15,7 @@ IDENTIFIER_RE = re.compile(r"^[a-z0-9][a-z0-9._-]{0,127}$")
 
 
 class ContractError(ValueError):
-    """Input violates an Askesis contract."""
+    """Input violates an Agent Skill Mastery Engine contract."""
 
 
 def canonical_bytes(value: Any) -> bytes:

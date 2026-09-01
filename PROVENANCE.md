@@ -1,6 +1,6 @@
 # Project provenance and local contributions
 
-Askesis is informed by the method in:
+Agent Skill Mastery Engine, formerly Askesis, is informed by the method in:
 
 Tang, L.; Rashtchian, C.; Ferng, C.-S.; Tomkins, A.; Juan, D.-C.; Vu, T.
 "WikiSkill: Compiling Agent Experience into Persistent Knowledge for Skill Evolution."

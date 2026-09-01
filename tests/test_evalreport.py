@@ -5,8 +5,8 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.evalreport import (
+from asme.canonical import ContractError
+from asme.evalreport import (
     EVAL_REPORT_SCHEMA,
     EvalRun,
     EvalTaskScore,

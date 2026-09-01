@@ -15,7 +15,7 @@ from .proposal import purpose_origin_observations
 from .snapshot import Snapshot
 
 
-OBSERVATION_CANDIDATE_SCHEMA = "askesis.observation-candidate.v1"
+OBSERVATION_CANDIDATE_SCHEMA = "asme.observation-candidate.v1"
 _SEMVER = re.compile(
     r"(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)"
 )
@@ -61,7 +61,7 @@ class ObservationCandidate:
     accepted_scores: tuple[float, float]
     review_status: str = "pending_human_review"
     shared_log_write_allowed: bool = False
-    source_system: str = "askesis"
+    source_system: str = "asme"
     schema: str = OBSERVATION_CANDIDATE_SCHEMA
 
     @property
@@ -230,7 +230,7 @@ def build_observation_candidate(
         "accepted_scores": list(impact.scores),
         "review_status": "pending_human_review",
         "shared_log_write_allowed": False,
-        "source_system": "askesis",
+        "source_system": "asme",
         "schema": OBSERVATION_CANDIDATE_SCHEMA,
     }
     return ObservationCandidate(

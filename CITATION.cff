@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use Askesis, cite the software and preserve its project attribution."
-title: "Askesis"
+message: "If you use Agent Skill Mastery Engine, cite the software and preserve its project attribution."
+title: "Agent Skill Mastery Engine"
 type: software
 version: "0.1.2"
 license: MIT

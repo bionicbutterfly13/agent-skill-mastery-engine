@@ -11,13 +11,13 @@ import sys
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.canonical import sha256_bytes, tree_manifest
-from askesis.lifecycle import TransitionInput
-from askesis.package import Compatibility, build_archive, build_projection
-from askesis.snapshot import Snapshot
-from askesis.transaction import PlannedDeletion, PlannedWrite
-from askesis.workspace import DomainWorkspace, WorkspaceLayout, _state_json
+from asme.canonical import ContractError
+from asme.canonical import sha256_bytes, tree_manifest
+from asme.lifecycle import TransitionInput
+from asme.package import Compatibility, build_archive, build_projection
+from asme.snapshot import Snapshot
+from asme.transaction import PlannedDeletion, PlannedWrite
+from asme.workspace import DomainWorkspace, WorkspaceLayout, _state_json
 
 
 def _workspace(root: Path) -> DomainWorkspace:
@@ -194,7 +194,7 @@ def test_hf_a23_staging_leaves_declared_live_root_byte_identical(
         encoding="utf-8",
     )
     compatibility = Compatibility(
-        contract_version="askesis.contract.v1",
+        contract_version="asme.contract.v1",
         core_version="0.1.0",
         package_version="0.1.0",
         adapter_id="hermes",
@@ -272,8 +272,8 @@ import sys
 real_import = builtins.__import__
 
 def guarded_import(name, *args, **kwargs):
-    if name == "askesis" or name.startswith("askesis."):
-        raise ModuleNotFoundError("askesis deliberately unavailable")
+    if name == "asme" or name.startswith("asme."):
+        raise ModuleNotFoundError("asme deliberately unavailable")
     return real_import(name, *args, **kwargs)
 
 builtins.__import__ = guarded_import
@@ -300,7 +300,7 @@ assert [item["name"] for item in context.tools] == ["wikiskill_capabilities"]
     )
     assert result.returncode == 0, result.stderr
     manifest = plugin_path.with_name("plugin.yaml").read_text(encoding="utf-8")
-    assert '"askesis-agent-skill-mastery-engine>=0.1.0,<0.2"' in manifest
+    assert '"agent-skill-mastery-engine>=0.1.0,<0.2"' in manifest
 
 
 def test_hermes_adapter_probes_lifecycle_from_active_plugin_context() -> None:
@@ -366,7 +366,7 @@ def test_current_tree_is_community_scan_clean() -> None:
     projection = build_projection(
         source_root=package_root,
         compatibility=Compatibility(
-            contract_version="askesis.contract.v1",
+            contract_version="asme.contract.v1",
             core_version="0.1.0",
             package_version="0.1.0",
             adapter_id="hermes",

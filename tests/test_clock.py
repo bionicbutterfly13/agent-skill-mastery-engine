@@ -4,10 +4,10 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import sha256_bytes
-from askesis.clock import CanonicalClock
-from askesis.transaction import PlannedWrite, SimulatedCrash
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.canonical import sha256_bytes
+from asme.clock import CanonicalClock
+from asme.transaction import PlannedWrite, SimulatedCrash
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 FIXED = "2026-08-31T12:34:56+00:00"

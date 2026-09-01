@@ -153,7 +153,7 @@ class DeliveryWorkflow:
             approval_hash = hash_json(asdict(normalized_approval))
             approval_record_bytes = canonical_bytes(
                 {
-                    "schema": "askesis.consumed-approval.v1",
+                    "schema": "asme.consumed-approval.v1",
                     "approval": asdict(normalized_approval.consume()),
                     "original_approval_hash": approval_hash,
                     "consumed_for": staging_id,

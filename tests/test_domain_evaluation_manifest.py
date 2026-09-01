@@ -7,12 +7,12 @@ import subprocess
 import pytest
 
 from conftest import write_program
-from askesis.canonical import ContractError, sha256_bytes
-from askesis.contract import CapabilityReport
-from askesis.domain import AnswerRecord, TaskRecord, load_declared_domain, verify_domain_seal
-from askesis.evaluation import EvaluationResult, evaluate_output
-from askesis.evidence import captured_execution, maintainer_payload, proposer_payload, rollout_payload
-from askesis.manifest import build_rollout_manifest, verify_manifest_bindings
+from asme.canonical import ContractError, sha256_bytes
+from asme.contract import CapabilityReport
+from asme.domain import AnswerRecord, TaskRecord, load_declared_domain, verify_domain_seal
+from asme.evaluation import EvaluationResult, evaluate_output
+from asme.evidence import captured_execution, maintainer_payload, proposer_payload, rollout_payload
+from asme.manifest import build_rollout_manifest, verify_manifest_bindings
 
 
 def test_hf_a24_domain_accepts_declared_sources_only(declared_domain, tmp_path: Path) -> None:
@@ -389,7 +389,7 @@ def test_hf_a08_extractor_and_scorer_each_use_exactly_30_seconds(
             stdout = "1\n"
         return subprocess.CompletedProcess(command, 0, stdout=stdout, stderr="")
 
-    monkeypatch.setattr("askesis.evaluation.subprocess.run", fake_run)
+    monkeypatch.setattr("asme.evaluation.subprocess.run", fake_run)
     result = evaluate_output(
         returned_output="returned",
         expected="expected",
@@ -411,7 +411,7 @@ def test_hf_a08_timeout_fails_closed_without_waiting(
         assert kwargs["timeout"] == 30.0
         raise subprocess.TimeoutExpired(command, timeout=30.0)
 
-    monkeypatch.setattr("askesis.evaluation.subprocess.run", time_out)
+    monkeypatch.setattr("asme.evaluation.subprocess.run", time_out)
     result = evaluate_output(
         returned_output="returned",
         expected="expected",

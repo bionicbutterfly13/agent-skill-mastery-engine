@@ -11,7 +11,7 @@ from .canonical import ContractError, hash_json, require_identifier
 from .domain import DeclaredDomain
 
 
-SEED_SCHEMA = "askesis.observation-seed.v1"
+SEED_SCHEMA = "asme.observation-seed.v1"
 _HEADINGS = ("## Description", "## Root cause", "## Evidence", "## Solution")
 _EVIDENCE = re.compile(
     r"^- observation ([a-z0-9][a-z0-9._-]{0,127}): (.+)$"

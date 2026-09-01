@@ -3,8 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 import re
 
-from askesis.integration import validate_skill_authoring
-from askesis.source_registry import PUBLIC_ARTIFACTS
+from asme.integration import validate_skill_authoring
+from asme.source_registry import PUBLIC_ARTIFACTS
 
 
 def test_public_inventory_is_complete_and_license_matches_gate_a_option_a() -> None:
@@ -58,7 +58,7 @@ def test_public_prose_has_no_em_dash_and_skill_description_is_bounded() -> None:
     assert description is not None and len(description.group(1)) < 300
     assert re.search(r"^1\. ", skill, flags=re.MULTILINE)
     metadata = validate_skill_authoring(
-        skill.encode("utf-8"), expected_name="askesis"
+        skill.encode("utf-8"), expected_name="asme"
     )
     assert metadata.version == "0.1.0"
     assert metadata.last_updated == "2026-08-31"

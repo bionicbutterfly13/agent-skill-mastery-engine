@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError, sha256_bytes
-from askesis.proposal import validate_proposal
-from askesis.snapshot import Snapshot
+from asme.canonical import ContractError, sha256_bytes
+from asme.proposal import validate_proposal
+from asme.snapshot import Snapshot
 
 
 def _active_snapshot(tmp_path: Path) -> Snapshot:

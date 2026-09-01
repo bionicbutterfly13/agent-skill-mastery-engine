@@ -2,7 +2,7 @@
 
 ## Shared core boundary
 
-The `askesis` Python package owns contracts and state. A runtime adapter may:
+The `asme` Python package owns contracts and state. A runtime adapter may:
 
 1. Probe its exact runtime and emit a `CapabilityReport`.
 2. Receive a hash-bound `AdapterJob` for one fresh session.
@@ -52,7 +52,7 @@ external reviewer or adapter owns every transfer between them.
 
 1. A human selects the exact Task Observer observation IDs for one domain.
 2. An external procedure creates a seed packet and separate approval record.
-3. Run `askesis seed-observations --packet <packet.json> --approval
+3. Run `asme seed-observations --packet <packet.json> --approval
    <approval.json>` before baseline evidence exists.
 4. The core records the consumed approval and seed manifest. Pattern pages and evolved
    `PURPOSE.md` files preserve the sorted `origin_observations` list.
@@ -62,7 +62,7 @@ external reviewer or adapter owns every transfer between them.
 After a validated export, run:
 
 ```sh
-askesis observation-candidate \
+asme observation-candidate \
   --domain <domain-id> \
   --domain-root <domain-root> \
   --skill <skill-name>
@@ -97,7 +97,7 @@ After any Hermes update:
 3. Add the version to compatibility metadata only if those tests pass.
 4. Keep dispatch disabled if the provider route cannot fail closed.
 
-A hook or shell script may call `askesis` commands outside the plugin. It must
+A hook or shell script may call `asme` commands outside the plugin. It must
 not infer success from exit code alone: read the JSON result, preserve job hashes, and
 return a contract-valid capture. Scripts must not read ambient session history or write a
 live skill root.

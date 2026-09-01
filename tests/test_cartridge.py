@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.cartridge import DomainCartridge
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.canonical import ContractError
+from asme.cartridge import DomainCartridge
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def test_cartridge_binds_prompt_programs_and_named_read_resources(

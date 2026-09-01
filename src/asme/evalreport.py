@@ -12,7 +12,7 @@ from .claims import ClaimClass, RunEvidence, evaluate_claim
 from .contract import TraceFidelity
 from .evaluation import evaluate_output
 
-EVAL_REPORT_SCHEMA = "askesis.eval-report.v1"
+EVAL_REPORT_SCHEMA = "asme.eval-report.v1"
 _REQUIRED_PHASES = ("baseline", "validation", "confirmation")
 _CARTRIDGE_CONFIG_FIELDS = {"extractor", "scorer"}
 _OUTPUT_ROW_FIELDS = {"task_id", "returned_output"}
@@ -221,7 +221,7 @@ def render_eval_summary(report: Mapping[str, Any]) -> str:
         raise ContractError("eval report schema mismatch")
     lines = [
         (
-            f"Askesis eval report for {report['domain_id']}"
+            f"Agent Skill Mastery Engine eval report for {report['domain_id']}"
             f" (seed {report['seed']}, fidelity {report['trace_fidelity']},"
             f" isolation {report['isolation_label']})"
         )

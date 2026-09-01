@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError, sha256_bytes
-from askesis.contract import ApprovalRecord, LifecycleState
-from askesis.domain import load_declared_domain
-from askesis.seed import validate_seed_packet
-from askesis.workflow import EvolutionWorkflow
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.canonical import ContractError, sha256_bytes
+from asme.contract import ApprovalRecord, LifecycleState
+from asme.domain import load_declared_domain
+from asme.seed import validate_seed_packet
+from asme.workflow import EvolutionWorkflow
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def _page() -> str:
@@ -33,7 +33,7 @@ def _page() -> str:
 
 def _payload(*, visibility: str = "public") -> dict:
     return {
-        "schema": "askesis.observation-seed.v1",
+        "schema": "asme.observation-seed.v1",
         "domain_id": "seed-domain",
         "observations": [
             {

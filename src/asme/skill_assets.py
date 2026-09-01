@@ -1,7 +1,7 @@
-"""Locate Askesis's own agent skill: SKILL.md and its companion files.
+"""Locate Agent Skill Mastery Engine's own agent skill: SKILL.md and its companion files.
 
 The canonical copies live at the repository root. A built wheel carries them under
-``askesis/skill/`` (see ``setup.py``); an editable or source checkout serves the root
+``asme/skill/`` (see ``setup.py``); an editable or source checkout serves the root
 files directly. This module deliberately has no package-relative imports so that
 ``setup.py`` can load it by file path at build time without importing the package.
 """
@@ -12,7 +12,7 @@ from importlib import resources
 from pathlib import Path
 import shutil
 
-SKILL_NAME = "askesis"
+SKILL_NAME = "asme"
 SKILL_FILES: tuple[str, ...] = ("SKILL.md", "PURPOSE.md", "NOTICE.md", "LICENSE")
 SKILL_DIRECTORIES: tuple[str, ...] = ("references",)
 PACKAGED_SUBDIRECTORY = "skill"
@@ -20,16 +20,16 @@ _IGNORED_NAMES = frozenset({"__pycache__", ".DS_Store", "Thumbs.db"})
 
 
 def skill_root() -> Path:
-    """Return the directory that holds Askesis's own SKILL.md and companions."""
+    """Return the directory that holds Agent Skill Mastery Engine's own SKILL.md and companions."""
 
-    packaged = resources.files("askesis").joinpath(PACKAGED_SUBDIRECTORY)
+    packaged = resources.files("asme").joinpath(PACKAGED_SUBDIRECTORY)
     if isinstance(packaged, Path) and _holds_skill(packaged):
         return packaged
     checkout = Path(__file__).resolve().parents[2]
-    if (checkout / "src" / "askesis").is_dir() and _holds_skill(checkout):
+    if (checkout / "src" / "asme").is_dir() and _holds_skill(checkout):
         return checkout
     raise FileNotFoundError(
-        "Askesis skill files are neither packaged under askesis/skill nor present in a "
+        "Agent Skill Mastery Engine skill files are neither packaged under asme/skill nor present in a "
         "source checkout"
     )
 

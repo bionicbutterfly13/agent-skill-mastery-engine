@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from askesis.canonical import ContractError, sha256_bytes
-from askesis.wiki import (
+from asme.canonical import ContractError, sha256_bytes
+from asme.wiki import (
     TraceView,
     sample_traces,
     validate_maintainer_change,

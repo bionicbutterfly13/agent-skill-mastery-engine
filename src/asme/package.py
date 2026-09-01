@@ -27,8 +27,8 @@ from .canonical import (
 from .transaction import PlannedWrite
 
 
-BUNDLE_MANIFEST_SCHEMA = "askesis.bundle-manifest.v1"
-COMPATIBILITY_SCHEMA = "askesis.compatibility.v1"
+BUNDLE_MANIFEST_SCHEMA = "asme.bundle-manifest.v1"
+COMPATIBILITY_SCHEMA = "asme.compatibility.v1"
 BUNDLE_MANIFEST_NAME = "bundle-manifest.json"
 
 _BUILD_DIRECTORY_NAMES = frozenset(

@@ -1,9 +1,9 @@
-"""Install Askesis's own agent skill into a Claude Code skill directory.
+"""Install Agent Skill Mastery Engine's own agent skill into a Claude Code skill directory.
 
-This is the one write outside a domain root that Askesis performs, and it copies only
+This is the one write outside a domain root that Agent Skill Mastery Engine performs, and it copies only
 the packaged SKILL.md and its companions. It never installs an evolved candidate: a
 source under a staging or archive root, a source carrying a staged bundle manifest, or
-a SKILL.md whose frontmatter name is not ``askesis`` is refused before any byte is
+a SKILL.md whose frontmatter name is not ``asme`` is refused before any byte is
 written. Evolved candidates stay staged until a human installs them by hand.
 """
 
@@ -18,14 +18,14 @@ from .canonical import ContractError, sha256_file
 from .integration import validate_skill_authoring
 from .skill_assets import SKILL_NAME, skill_files, skill_root
 
-INSTALL_SCHEMA = "askesis.skill-install.v1"
-INSTALL_SCOPE = "askesis_own_skill_only"
+INSTALL_SCHEMA = "asme.skill-install.v1"
+INSTALL_SCOPE = "asme_own_skill_only"
 _STAGING_COMPONENTS = frozenset({"staging", "archives", "archive"})
 _STAGED_BUNDLE_MARKER = "bundle-manifest.json"
 
 
 def default_target() -> Path:
-    """Return the Claude Code skill directory Askesis installs into by default."""
+    """Return the Claude Code skill directory Agent Skill Mastery Engine installs into by default."""
 
     return Path.home() / ".claude" / "skills" / SKILL_NAME
 
@@ -37,7 +37,7 @@ def install_skill(
     force: bool = False,
     dry_run: bool = False,
 ) -> dict[str, Any]:
-    """Copy Askesis's own skill files into ``target`` and describe the result."""
+    """Copy Agent Skill Mastery Engine's own skill files into ``target`` and describe the result."""
 
     root = _validated_source(source)
     members = skill_files(root)
@@ -94,15 +94,15 @@ def _validated_source(source: Path | None) -> Path:
             )
     if (root / _STAGED_BUNDLE_MARKER).exists():
         raise ContractError(
-            "install refuses a staged bundle; only Askesis's own skill can be installed"
+            "install refuses a staged bundle; only Agent Skill Mastery Engine's own skill can be installed"
         )
     skill = root / "SKILL.md"
     if skill.is_symlink() or not skill.is_file():
-        raise ContractError("install source must contain Askesis's SKILL.md")
+        raise ContractError("install source must contain Agent Skill Mastery Engine's SKILL.md")
     try:
         validate_skill_authoring(skill.read_bytes(), expected_name=SKILL_NAME)
     except ContractError as exc:
-        raise ContractError(f"install accepts only Askesis's own SKILL.md: {exc}") from exc
+        raise ContractError(f"install accepts only Agent Skill Mastery Engine's own SKILL.md: {exc}") from exc
     return root
 
 
@@ -129,7 +129,7 @@ def _replace_tree(
     root: Path, destination: Path, members: tuple[str, ...], *, replacing: bool
 ) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    staging = destination.parent / f".{destination.name}.askesis-install-{os.getpid()}"
+    staging = destination.parent / f".{destination.name}.asme-install-{os.getpid()}"
     if staging.exists():
         shutil.rmtree(staging)
     try:

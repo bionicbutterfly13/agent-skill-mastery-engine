@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "askesis-agent-skill-mastery-engine"
+name = "agent-skill-mastery-engine"
 version = "0.1.2"
-description = "Askesis, the agent-skill-mastery-engine: runtime-neutral WikiSkill-method skill evolution core with thin runtime adapters"
+description = "Agent Skill Mastery Engine: runtime-neutral WikiSkill-method skill evolution core with thin runtime adapters"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{name = "Mani Saint-Victor, MD"}]
@@ -18,13 +18,13 @@ classifiers = [
 ]
 
 [project.scripts]
-askesis = "askesis.cli:main"
+asme = "asme.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-askesis = ["data/*.json"]
+asme = ["data/*.json"]
 
 [tool.pytest.ini_options]
 addopts = "-q"

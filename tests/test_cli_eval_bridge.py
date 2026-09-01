@@ -6,10 +6,10 @@ import shutil
 
 import pytest
 
-from askesis.canonical import sha256_bytes, tree_manifest
-from askesis.cli import _parser, main
-from askesis.contract import ApprovalRecord
-from askesis.observer_bridge import (
+from asme.canonical import sha256_bytes, tree_manifest
+from asme.cli import _parser, main
+from asme.contract import ApprovalRecord
+from asme.observer_bridge import (
     OBSERVER_REVIEW_PHASE,
     build_observer_review_packet,
     write_observer_review_packet,
@@ -88,7 +88,7 @@ def test_eval_run_produces_byte_stable_accepted_report(
     assert main(command) == 0
     first = capsys.readouterr().out
     report = json.loads(first)
-    assert report["schema"] == "askesis.eval-report.v1"
+    assert report["schema"] == "asme.eval-report.v1"
     (run,) = report["runs"]
     assert run["aggregates"] == {
         "baseline": 0.5,
@@ -152,7 +152,7 @@ def test_eval_run_refuses_missing_phase_and_unknown_task(
         "1",
     ]
     assert main(command) == 2
-    assert "askesis:" in capsys.readouterr().err
+    assert "asme:" in capsys.readouterr().err
     shutil.copy(source / "confirmation.jsonl", partial / "confirmation.jsonl")
     (partial / "baseline.jsonl").write_text(
         '{"returned_output": "<answer>4</answer>", "task_id": "unknown-1"}\n',
@@ -193,4 +193,4 @@ def test_verify_packet_refuses_tampering_missing_manifest_and_extras(
     bare = tmp_path / "bare"
     bare.mkdir()
     assert main(["verify-packet", "--packet", str(bare)]) == 2
-    assert "askesis:" in capsys.readouterr().err
+    assert "asme:" in capsys.readouterr().err

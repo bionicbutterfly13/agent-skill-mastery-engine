@@ -1,14 +1,17 @@
-# Askesis
+# Agent Skill Mastery Engine
 
-Askesis is a runtime-neutral implementation of the experience-to-skill
+Agent Skill Mastery Engine is a runtime-neutral implementation of the experience-to-skill
 evolution method described in the WikiSkill paper. One shared core owns evidence,
 scoring, the persistent wiki, immutable skill snapshots, strict promotion, recovery,
 and staging. Runtime adapters translate only measured capabilities and captured jobs.
 
+This project was formerly named Askesis and published as the distribution
+`askesis-agent-skill-mastery-engine`; the import package and CLI were `askesis`.
+
 ## Current status
 
 This tree is a development candidate. It does not install itself into Hermes, Claude
-Code, or Codex; `askesis install` is an explicit, user-run step that copies only Askesis's
+Code, or Codex; `asme install` is an explicit, user-run step that copies only Agent Skill Mastery Engine's
 own skill files (see [Install for Claude Code](#install-for-claude-code)). The tree has
 not been approved for publication or distribution.
 The historical Claude Revision 8 remains `NEEDS REVISION`; this implementation does
@@ -33,7 +36,7 @@ request. Provider-hidden reasoning cannot be relabelled as a paper-complete trac
 - Invalid-manifest reset, intent-first recovery, staged archives, and archive readback.
 - Pre-intent dependency rehashing plus an exact output-plan hash for every workflow command.
 - Capability-bound package labels plus validated and explicitly untested staging routes.
-  Neither route installs anything; the only install verb covers Askesis's own skill.
+  Neither route installs anything; the only install verb covers Agent Skill Mastery Engine's own skill.
 - Staging lint for version, date, concrete triggers, and inherited observation provenance.
 - A read-only observation candidate bridge that preserves Task Observer ownership and
   requires human review before any shared learning record is written.
@@ -48,8 +51,8 @@ request. Provider-hidden reasoning cannot be relabelled as a paper-complete trac
   it cannot write another system's memory or observation log.
 - Only exact OpenAI-backed provider and model allowlists are accepted for prepared jobs.
 - Candidate skills are staged only. Installation and publication are separate human
-  approval gates. `askesis install` never touches a staged candidate; it installs only
-  Askesis's own `SKILL.md` and companions and refuses staging and archive sources.
+  approval gates. `asme install` never touches a staged candidate; it installs only
+  Agent Skill Mastery Engine's own `SKILL.md` and companions and refuses staging and archive sources.
 - Code is MIT licensed; docs, methodology, and templates are CC BY 4.0 (selected
   2026-09-01, Gate A decision A4, Option A). Projects using this work are asked, as a
   non-binding request, to link to manysaintvictormd.com on their project page.
@@ -60,40 +63,40 @@ request. Provider-hidden reasoning cannot be relabelled as a paper-complete trac
 
 ## Install for Claude Code
 
-The published package carries Askesis's own agent skill (`SKILL.md`, `PURPOSE.md`,
+The published package carries Agent Skill Mastery Engine's own agent skill (`SKILL.md`, `PURPOSE.md`,
 `NOTICE.md`, `LICENSE`, and `references/`). Installing it is a two-step, user-run
 action; nothing is installed as a side effect of `pip` or `uv`.
 
 ```sh
-uv tool install askesis-agent-skill-mastery-engine
-askesis install
+uv tool install agent-skill-mastery-engine
+asme install
 ```
 
-`askesis install` copies only those skill files into `~/.claude/skills/askesis`. Pass
+`asme install` copies only those skill files into `~/.claude/skills/asme`. Pass
 `--target DIR` for another skill directory, `--dry-run` to print the plan without
-writing, and `--force` to replace an existing `askesis` skill directory. The verb
+writing, and `--force` to replace an existing `asme` skill directory. The verb
 refuses any `--source` under a staging or archive root and any staged bundle, so an
 evolved candidate can never be installed this way. From a development checkout,
 `python scripts/install_claude_skill.py` does the same job.
 
-`uv tool install` places the `askesis` entry point in `~/.local/bin`; add that
-directory to `PATH` if `askesis --version` is not found.
+`uv tool install` places the `asme` entry point in `~/.local/bin`; add that
+directory to `PATH` if `asme --version` is not found.
 
 Verify:
 
 ```sh
-askesis --version
-askesis install --dry-run
-ls ~/.claude/skills/askesis
+asme --version
+asme install --dry-run
+ls ~/.claude/skills/asme
 ```
 
-After a restart, Claude Code lists `askesis` among its available skills.
+After a restart, Claude Code lists `asme` among its available skills.
 
 Uninstall:
 
 ```sh
-rm -r ~/.claude/skills/askesis
-uv tool uninstall askesis-agent-skill-mastery-engine
+rm -r ~/.claude/skills/asme
+uv tool uninstall agent-skill-mastery-engine
 ```
 
 ## Development checkout
@@ -107,7 +110,7 @@ python3 -m venv .venv
 python -m pip install -e .
 python -m pytest
 python scripts/stdlib_smoke.py
-askesis --help
+asme --help
 ```
 
 The runtime package uses only the Python standard library. Pytest is needed only for the

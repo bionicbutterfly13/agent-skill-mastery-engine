@@ -12,7 +12,7 @@ from .canonical import ContractError, canonical_bytes, hash_json, safe_member_na
 from .contract import SourceClass
 
 
-SOURCE_REGISTRY_SCHEMA = "askesis.source-registry.v1"
+SOURCE_REGISTRY_SCHEMA = "asme.source-registry.v1"
 _ENTRY_ID = re.compile(r"(?:SP-\d{3}|HF-A\d{2}|GA-\d{2}|A[1-5]|PUB-\d{3})")
 
 PUBLIC_ARTIFACTS = (
@@ -27,7 +27,7 @@ PUBLIC_ARTIFACTS = (
     "references/paper-notes.md",
     "references/fidelity.md",
     "references/integration.md",
-    "src/askesis/data/source-registry.json",
+    "src/asme/data/source-registry.json",
     "references/verification/README.md",
     "references/verification/independent-review-protocol.md",
     "docs/implementation-parity.md",
@@ -150,7 +150,7 @@ def source_registry_from_mapping(raw: Mapping[str, Any]) -> SourceRegistry:
 
 
 def default_source_registry_bytes() -> bytes:
-    resource = resources.files("askesis").joinpath(
+    resource = resources.files("asme").joinpath(
         "data/source-registry.json"
     )
     raw_bytes = resource.read_bytes()

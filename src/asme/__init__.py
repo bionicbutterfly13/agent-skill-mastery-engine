@@ -1,4 +1,4 @@
-"""Askesis runtime-neutral core."""
+"""Agent Skill Mastery Engine runtime-neutral core."""
 
 from .contract import CONTRACT_VERSION, ADAPTER_PORT_VERSION
 

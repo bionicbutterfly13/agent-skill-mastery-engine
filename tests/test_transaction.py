@@ -4,14 +4,14 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import (
+from asme.canonical import (
     ContractError,
     canonical_bytes,
     hash_json,
     sha256_bytes,
     tree_manifest,
 )
-from askesis.transaction import (
+from asme.transaction import (
     PendingTransaction,
     PlannedAbsence,
     PlannedDeletion,
@@ -23,7 +23,7 @@ from askesis.transaction import (
     TransactionEngine,
     transaction_id,
 )
-from askesis.dependencies import default_dependency_matrix
+from asme.dependencies import default_dependency_matrix
 
 
 CRASH_POINTS = (
@@ -404,7 +404,7 @@ def test_recovery_accepts_legacy_v1_intent_without_output_plan(tmp_path: Path) -
     pending = engine.read_state()
     assert pending is not None
     record = pending["txn"]
-    record["schema"] = "askesis.transaction.v1"
+    record["schema"] = "asme.transaction.v1"
     record["input_hashes"].pop("output_plan")
     record["transaction_id"] = transaction_id(
         operation=record["operation"],

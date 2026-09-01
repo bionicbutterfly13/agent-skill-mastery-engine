@@ -7,24 +7,24 @@ from pathlib import Path
 
 import pytest
 
-from askesis.canonical import ContractError, canonical_bytes, hash_json, sha256_bytes
-from askesis.contract import ApprovalRecord, CapabilityReport, LifecycleState
-from askesis.delivery import DeliveryWorkflow
-from askesis.lifecycle import TransitionInput
-from askesis.manifest import RolloutEntry, RolloutManifest
-from askesis.package import (
+from asme.canonical import ContractError, canonical_bytes, hash_json, sha256_bytes
+from asme.contract import ApprovalRecord, CapabilityReport, LifecycleState
+from asme.delivery import DeliveryWorkflow
+from asme.lifecycle import TransitionInput
+from asme.manifest import RolloutEntry, RolloutManifest
+from asme.package import (
     Compatibility,
     build_archive,
     build_projection_from_files,
     verify_archive,
 )
-from askesis.snapshot import Snapshot
-from askesis.workspace import DomainWorkspace, WorkspaceLayout
+from asme.snapshot import Snapshot
+from asme.workspace import DomainWorkspace, WorkspaceLayout
 
 
 def _compatibility() -> Compatibility:
     return Compatibility(
-        contract_version="askesis.contract.v1",
+        contract_version="asme.contract.v1",
         core_version="0.1.0",
         package_version="0.1.0",
         adapter_id="hermes",
@@ -386,7 +386,7 @@ def test_untested_delivery_persists_consumed_approval_and_replays_exactly(
         / "untested-approval.json"
     )
     persisted = json.loads(approval_path.read_text(encoding="utf-8"))
-    assert persisted["schema"] == "askesis.consumed-approval.v1"
+    assert persisted["schema"] == "asme.consumed-approval.v1"
     assert persisted["approval"]["approval_id"] == approval.approval_id
     assert persisted["approval"]["consumed"] is True
     assert persisted["original_approval_hash"] == hash_json(asdict(approval))

@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import pytest
 
-from askesis.bootstrap import BOOTSTRAP_SCHEMA, build_paired_bootstrap
-from askesis.canonical import ContractError, sha256_bytes
-from askesis.claims import ClaimClass, RunEvidence, evaluate_claim
-from askesis.contract import TraceFidelity
-from askesis.evalreport import EvalRun, EvalTaskScore
+from asme.bootstrap import BOOTSTRAP_SCHEMA, build_paired_bootstrap
+from asme.canonical import ContractError, sha256_bytes
+from asme.claims import ClaimClass, RunEvidence, evaluate_claim
+from asme.contract import TraceFidelity
+from asme.evalreport import EvalRun, EvalTaskScore
 
 
 def _score(task_id: str, score: float) -> EvalTaskScore:

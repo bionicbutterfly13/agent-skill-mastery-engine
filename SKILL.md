@@ -1,11 +1,11 @@
 ---
-name: askesis
+name: asme
 description: Evolve text-only agent skills from declared task sets using sealed evidence, persistent wiki patterns, strict validation, and staging-only delivery. Use when running controlled experience-to-skill experiments, never live-session mining or automatic installation.
 version: 0.1.0
 last_updated: 2026-08-31
 ---
 
-# Askesis
+# Agent Skill Mastery Engine
 
 Use the runtime-neutral CLI for state and evidence. Use a runtime adapter only for
 capability measurement and fresh-session execution. The adapter never owns scoring,
@@ -21,7 +21,7 @@ promotion, or packaging.
 ## Required order
 
 1. Read [PURPOSE.md](PURPOSE.md) and [references/fidelity.md](references/fidelity.md).
-2. Run `askesis status` for an existing domain. Never infer its phase.
+2. Run `asme status` for an existing domain. Never infer its phase.
 3. For a new domain, declare every task, answer, prompt, extractor, scorer, tool profile,
    visibility, read resource, and iteration limit at `init`.
 4. Choose exactly one pre-baseline path: `skip-seed` or a human-approved
@@ -37,7 +37,7 @@ promotion, or packaging.
    `package-untested` needs a separate hash-bound approval and explicit untested labels.
 8. After a validated export, `observation-candidate` may print one review-only reusable
    signal. It cannot write Task Observer or any shared log. Stop at staging: no command
-   installs an evolved candidate. `askesis install` copies only Askesis's own `SKILL.md`
+   installs an evolved candidate. `asme install` copies only Agent Skill Mastery Engine's own `SKILL.md`
    and companions into a Claude Code skill directory and refuses staging and archive
    sources.
 

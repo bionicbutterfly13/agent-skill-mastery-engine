@@ -8,7 +8,7 @@ from typing import Any, Mapping
 from .canonical import ContractError, hash_json
 
 
-GATE2_POLICY_VERSION = "askesis.gate2-policy.v1"
+GATE2_POLICY_VERSION = "asme.gate2-policy.v1"
 
 
 @dataclass(frozen=True)

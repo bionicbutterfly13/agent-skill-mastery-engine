@@ -8,8 +8,8 @@ import zipfile
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.package import (
+from asme.canonical import ContractError
+from asme.package import (
     Compatibility,
     build_archive,
     build_projection,
@@ -20,12 +20,12 @@ from askesis.package import (
     validate_existing_projection,
     verify_archive,
 )
-from askesis.snapshot import Snapshot, active_snapshot, verify_snapshot
+from asme.snapshot import Snapshot, active_snapshot, verify_snapshot
 
 
 def _compatibility() -> Compatibility:
     return Compatibility(
-        contract_version="askesis.contract.v1",
+        contract_version="asme.contract.v1",
         core_version="0.1.0",
         package_version="0.1.0",
         adapter_id="hermes",

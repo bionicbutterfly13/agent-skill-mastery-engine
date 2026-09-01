@@ -38,11 +38,11 @@ from .workspace import DomainWorkspace, WorkspaceLayout
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="askesis",
+        prog="asme",
         description=(
             "Runtime-neutral WikiSkill core. Evolved candidates are staged, never "
             "installed; only `install` writes a skill directory, and it copies just "
-            "Askesis's own skill."
+            "Agent Skill Mastery Engine's own skill."
         ),
     )
     parser.add_argument("--version", action="version", version=__version__)
@@ -227,9 +227,9 @@ def _parser() -> argparse.ArgumentParser:
 
     install = subcommands.add_parser(
         "install",
-        help="Copy Askesis's own skill files into a Claude Code skill directory",
+        help="Copy Agent Skill Mastery Engine's own skill files into a Claude Code skill directory",
         description=(
-            "Install only Askesis's own agent skill (SKILL.md and companions). Sources "
+            "Install only Agent Skill Mastery Engine's own agent skill (SKILL.md and companions). Sources "
             "under a staging or archive root and staged bundles are refused; evolved "
             "candidates are never installed by this command."
         ),
@@ -237,15 +237,15 @@ def _parser() -> argparse.ArgumentParser:
     install.add_argument(
         "--target",
         type=Path,
-        help="Skill directory to create (default: ~/.claude/skills/askesis)",
+        help="Skill directory to create (default: ~/.claude/skills/asme)",
     )
     install.add_argument(
         "--source",
         type=Path,
-        help="Checkout holding Askesis's SKILL.md; staging and archive roots are refused",
+        help="Checkout holding Agent Skill Mastery Engine's SKILL.md; staging and archive roots are refused",
     )
     install.add_argument(
-        "--force", action="store_true", help="Replace an existing askesis skill directory"
+        "--force", action="store_true", help="Replace an existing asme skill directory"
     )
     install.add_argument(
         "--dry-run", action="store_true", help="Print the plan without writing anything"
@@ -318,7 +318,7 @@ def _candidate_manifest(args: argparse.Namespace) -> Any:
     )
     manifest = read_bundle_manifest(projection)
     return {
-        "schema": "askesis.candidate-manifest.v1",
+        "schema": "asme.candidate-manifest.v1",
         "status": manifest["status"],
         "license_policy": manifest["license_policy"],
         "tree_sha256": projection.tree_sha256,
@@ -615,7 +615,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.buffer.write(canonical_bytes(result))
         return 0
     except (ContractError, OSError) as exc:
-        sys.stderr.write(f"askesis: {exc}\n")
+        sys.stderr.write(f"asme: {exc}\n")
         return 2
 
 

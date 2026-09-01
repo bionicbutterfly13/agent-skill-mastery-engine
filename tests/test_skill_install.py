@@ -8,10 +8,10 @@ import sys
 
 import pytest
 
-from askesis.canonical import ContractError
-from askesis.cli import main
-from askesis.skill_assets import skill_files, skill_root
-from askesis.skill_install import INSTALL_SCOPE, default_target, install_skill
+from asme.canonical import ContractError
+from asme.cli import main
+from asme.skill_assets import skill_files, skill_root
+from asme.skill_install import INSTALL_SCOPE, default_target, install_skill
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -30,25 +30,25 @@ def _copy_source(destination: Path) -> Path:
 
 
 def test_default_target_is_the_claude_code_skill_directory() -> None:
-    assert default_target() == Path.home() / ".claude" / "skills" / "askesis"
+    assert default_target() == Path.home() / ".claude" / "skills" / "asme"
 
 
 def test_dry_run_writes_nothing_and_reports_the_plan(tmp_path: Path) -> None:
     parent = tmp_path / "skills"
     parent.mkdir()
     before = _entries(parent)
-    result = install_skill(target=parent / "askesis", dry_run=True)
+    result = install_skill(target=parent / "asme", dry_run=True)
     assert result["dry_run"] is True and result["installed"] is False
     assert result["scope"] == INSTALL_SCOPE
     assert result["evolved_candidate_installed"] is False
-    assert result["skill_name"] == "askesis"
+    assert result["skill_name"] == "asme"
     assert tuple(item["path"] for item in result["files"]) == skill_files()
     assert _entries(parent) == before
-    assert not (parent / "askesis").exists()
+    assert not (parent / "asme").exists()
 
 
 def test_install_copies_exactly_the_skill_files(tmp_path: Path) -> None:
-    target = tmp_path / "skills" / "askesis"
+    target = tmp_path / "skills" / "asme"
     result = install_skill(target=target)
     assert result["installed"] is True and result["replaced_existing"] is False
     copied = sorted(
@@ -58,21 +58,21 @@ def test_install_copies_exactly_the_skill_files(tmp_path: Path) -> None:
     root = skill_root()
     for item in result["files"]:
         assert (target / item["path"]).read_bytes() == (root / item["path"]).read_bytes()
-    assert _entries(target.parent) == {"askesis"}
+    assert _entries(target.parent) == {"asme"}
 
 
 def test_install_refuses_existing_target_without_force(tmp_path: Path) -> None:
-    target = tmp_path / "askesis"
+    target = tmp_path / "asme"
     target.mkdir()
     (target / "SKILL.md").write_text("stale", encoding="utf-8")
     with pytest.raises(ContractError, match="--force"):
         install_skill(target=target)
     assert (target / "SKILL.md").read_text(encoding="utf-8") == "stale"
-    assert _entries(tmp_path) == {"askesis"}
+    assert _entries(tmp_path) == {"asme"}
 
 
 def test_force_replaces_an_existing_skill_directory(tmp_path: Path) -> None:
-    target = tmp_path / "askesis"
+    target = tmp_path / "asme"
     target.mkdir()
     (target / "SKILL.md").write_text("stale", encoding="utf-8")
     (target / "leftover.md").write_text("old", encoding="utf-8")
@@ -80,7 +80,7 @@ def test_force_replaces_an_existing_skill_directory(tmp_path: Path) -> None:
     assert result["replaced_existing"] is True
     assert not (target / "leftover.md").exists()
     assert (target / "SKILL.md").read_bytes() == (skill_root() / "SKILL.md").read_bytes()
-    assert _entries(tmp_path) == {"askesis"}
+    assert _entries(tmp_path) == {"asme"}
 
 
 def test_force_refuses_a_target_that_is_not_a_skill_directory(tmp_path: Path) -> None:
@@ -106,8 +106,8 @@ def test_install_refuses_symlink_target_and_source_overlap(tmp_path: Path) -> No
 def test_install_refuses_any_source_under_a_staging_or_archive_root(
     tmp_path: Path, component: str
 ) -> None:
-    source = _copy_source(tmp_path / "domain" / component / "askesis__deadbeef0000")
-    target = tmp_path / "skills" / "askesis"
+    source = _copy_source(tmp_path / "domain" / component / "asme__deadbeef0000")
+    target = tmp_path / "skills" / "asme"
     with pytest.raises(ContractError, match="staging and archive"):
         install_skill(target=target, source=source, dry_run=True)
     with pytest.raises(ContractError, match="staging and archive"):
@@ -123,10 +123,10 @@ def test_install_refuses_a_staged_bundle_or_foreign_skill(tmp_path: Path) -> Non
     foreign = _copy_source(tmp_path / "foreign")
     skill = foreign / "SKILL.md"
     skill.write_text(
-        skill.read_text(encoding="utf-8").replace("name: askesis", "name: candidate", 1),
+        skill.read_text(encoding="utf-8").replace("name: asme", "name: candidate", 1),
         encoding="utf-8",
     )
-    with pytest.raises(ContractError, match="only Askesis's own SKILL.md"):
+    with pytest.raises(ContractError, match="only Agent Skill Mastery Engine's own SKILL.md"):
         install_skill(target=tmp_path / "out", source=foreign, dry_run=True)
     archive = tmp_path / "candidate.skill"
     archive.write_bytes(b"PK")
@@ -138,10 +138,10 @@ def test_install_refuses_a_staged_bundle_or_foreign_skill(tmp_path: Path) -> Non
 def test_cli_install_verb_emits_json_and_refuses_staging_sources(
     tmp_path: Path, capsys
 ) -> None:
-    target = tmp_path / "skills" / "askesis"
+    target = tmp_path / "skills" / "asme"
     assert main(["install", "--target", str(target), "--dry-run"]) == 0
     result = json.loads(capsys.readouterr().out)
-    assert result["schema"] == "askesis.skill-install.v1"
+    assert result["schema"] == "asme.skill-install.v1"
     assert result["installed"] is False and not target.exists()
 
     assert main(["install", "--target", str(target)]) == 0
@@ -151,7 +151,7 @@ def test_cli_install_verb_emits_json_and_refuses_staging_sources(
     assert main(["install", "--target", str(target)]) == 2
     assert "--force" in capsys.readouterr().err
 
-    staged = _copy_source(tmp_path / "domain" / "staging" / "askesis__deadbeef0000")
+    staged = _copy_source(tmp_path / "domain" / "staging" / "asme__deadbeef0000")
     assert main(
         ["install", "--target", str(target), "--source", str(staged), "--force"]
     ) == 2
@@ -162,7 +162,7 @@ def test_cli_install_verb_emits_json_and_refuses_staging_sources(
 def test_install_script_matches_the_cli_verb_and_dry_run_writes_nothing(
     tmp_path: Path,
 ) -> None:
-    target = tmp_path / "skills" / "askesis"
+    target = tmp_path / "skills" / "asme"
     env = {"PATH": os.environ.get("PATH", ""), "PYTHONIOENCODING": "utf-8"}
     script = _REPO_ROOT / "scripts" / "install_claude_skill.py"
     dry = subprocess.run(

@@ -1,6 +1,6 @@
 # Purpose and status
 
-Askesis is a runtime-neutral, staging-only implementation inspired by the
+Agent Skill Mastery Engine is a runtime-neutral, staging-only implementation inspired by the
 WikiSkill experience-to-skill evolution method. It keeps the state machine, evidence,
 scoring, wiki, snapshots, promotion, recovery, and packaging in one shared core. Runtime
 adapters translate only measured capabilities and captured executions.
@@ -33,7 +33,7 @@ compatibility with an untested Hermes, Claude Code, or Codex version.
 - No replacement of Task Observer's live observation, confidence, clustering, immediate
   skill authoring, deprecation, or archive responsibilities.
 - No network client, paid service, provider fallback, or live skill-root write by the
-  evolution core. The only installer, `askesis install`, copies Askesis's own skill files
+  evolution core. The only installer, `asme install`, copies Agent Skill Mastery Engine's own skill files
   and never an evolved candidate.
 - No claim that the historical Claude Revision 8 was approved or received a Codex
   `SOUND` verdict. Its retained status is `NEEDS REVISION`.
