@@ -27,7 +27,7 @@ The ledger is not an independent review and does not authorize installation or r
 
 This table records current implementation and test evidence for all 27 locked acceptance
 criteria. It is not an external Gate 1 signoff. `PASS` means the criterion's local
-contract is implemented and covered by the passing 470-test suite. Independent review is
+contract is implemented and covered by the passing 486-test suite. Independent review is
 separate evidence: the completed pre-repair review returned `SOUND WITH REQUIRED
 CORRECTIONS`; the post-repair adversarial review (2026-08-31) confirmed RIR-01, RIR-02,
 and RIR-03 closed. `POLICY-GATED` means code preserves the unresolved decision instead of
@@ -143,7 +143,7 @@ inventing approval.
 | SP-074 | IMPLEMENTED | Core jobs require fresh identities; the Hermes adapter takes the allowed zero-worker branch and an AST/runtime fixture proves it exposes no launch or delegation surface. |
 | SP-075 | IMPLEMENTED | Test preparation latches validated route; untested route needs approval first. |
 | SP-076 | IMPLEMENTED | Prompt-only role inputs, held-out boundaries, PURPOSE citations, and current approvals are core-checked. The Hermes active-context probe labels unresolved isolation, reports no provider route lock, and selects zero workers before any model request. |
-| SP-077 | IMPLEMENTED | The 470-test suite passes on Python 3.14.6, all 27 HF-A criteria have criterion-level evidence, stdlib smoke and conservative plugin probes pass on Python 3.11.15 through 3.14.6, and Hermes 0.20.5 Plugin Doctor passes with one tool and zero hooks. Lineage: contradicted pre-repair over HF-A18 and timeout evidence; both repairs confirmed closed by the post-repair adversarial review. |
+| SP-077 | IMPLEMENTED | The 486-test suite passes on Python 3.14.6, all 27 HF-A criteria have criterion-level evidence, stdlib smoke and conservative plugin probes pass on Python 3.11.15 through 3.14.6, and Hermes 0.20.5 Plugin Doctor passes with one tool and zero hooks. Lineage: contradicted pre-repair over HF-A18 and timeout evidence; both repairs confirmed closed by the post-repair adversarial review. |
 | SP-078 | IMPLEMENTED | WIKI negative fixtures use multiset wording and behavior. |
 | SP-079 | IMPLEMENTED | Every operation-boundary fixture proves pending-operation refusal, recover-twice idempotence, exact tree equality, and no transaction residue. |
 | SP-080 | IMPLEMENTED | State-operation cross-product, P1-P23, corrected reset paths, and exhaustive missing, valid, consumed, ambiguous, symlink, and wrong-phase reset errors execute. |

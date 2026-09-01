@@ -1,7 +1,7 @@
 manifest_version: 2
 api_version: 1
 name: askesis
-version: "0.1.0"
+version: "0.1.1"
 kind: standalone
 description: "Truthful Hermes capability probe and staging-only adapter for the Askesis core. Role dispatch remains disabled until Hermes exposes a fail-closed provider route lock."
 author: "Mani Saint-Victor, MD"

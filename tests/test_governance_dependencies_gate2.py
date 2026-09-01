@@ -22,6 +22,7 @@ from askesis.dependencies import DependencyKind, default_dependency_matrix
 from askesis.gate2 import DEFAULT_GATE2_POLICY, compare_gate2
 from askesis.governance import (
     DEVELOPMENT_DECISIONS,
+    DecisionStatus,
     HISTORICAL_PLAN_SOUND_VERDICT,
     HISTORICAL_PLAN_STATUS,
     PAPER_ATTRIBUTION,
@@ -292,6 +293,7 @@ def test_hf_a18_each_independently_inventoried_cell_refuses_real_preintent_drift
 
     original_execute = harness.workspace.engine.execute
     target_seen = False
+    status_before_drift: list[object] = []
 
     def execute_with_one_drift(**kwargs: object) -> dict[str, object]:
         nonlocal target_seen
@@ -301,6 +303,7 @@ def test_hf_a18_each_independently_inventoried_cell_refuses_real_preintent_drift
         if target_seen:
             return original_execute(**kwargs)
         target_seen = True
+        status_before_drift.append(harness.workspace.status())
         drifted = _drift_real_operation_call(
             harness,
             kwargs,
@@ -310,15 +313,10 @@ def test_hf_a18_each_independently_inventoried_cell_refuses_real_preintent_drift
         return original_execute(**drifted)
 
     harness.workspace.engine.execute = execute_with_one_drift
-    before = harness.workspace.status()
     with pytest.raises(ContractError):
         _exercise_real_dependency_operation(harness, operation)
     assert target_seen
-    assert harness.workspace.status() == before or operation not in {
-        "prepare-rollout",
-        "record-execution",
-        "ingest-rollout",
-    }
+    assert harness.workspace.status() == status_before_drift[0]
 
 
 @pytest.mark.parametrize("operation", ("export", "package-untested"))
@@ -658,7 +656,7 @@ def test_hf_a26_public_claim_requires_three_runs_and_paired_bootstrap() -> None:
     ).allowed
 
 
-def test_hf_a25_and_a27_development_authorized_release_blocked() -> None:
+def test_hf_a25_and_a27_gate_a_signed_publication_authorized_install_gated() -> None:
     registry_decisions = {
         entry.entry_id: entry
         for entry in default_source_registry().entries
@@ -667,13 +665,16 @@ def test_hf_a25_and_a27_development_authorized_release_blocked() -> None:
     for decision_id, decision in DEVELOPMENT_DECISIONS.items():
         assert decision.source_locator
         assert registry_decisions[decision_id].source_locator == decision.source_locator
+        assert decision.status is not DecisionStatus.UNRESOLVED
     a4 = DEVELOPMENT_DECISIONS["A4"]
     assert "free community use" in a4.value
     assert "attribution" in a4.value
     assert "manysaintvictormd.com" in a4.value
-    assert "exact license instrument not selected" in a4.value
+    assert "MIT" in a4.value and "CC BY 4.0" in a4.value
+    assert a4.status is DecisionStatus.ADOPTED
+    assert "Gate A approval record" in a4.value
     require_phase_authorized("implementation")
-    with pytest.raises(ContractError, match="unresolved A4"):
-        require_phase_authorized("publication")
+    require_phase_authorized("publication")
+    require_phase_authorized("distribution")
     with pytest.raises(ContractError, match="separate action-time approval"):
         require_phase_authorized("live_installation")

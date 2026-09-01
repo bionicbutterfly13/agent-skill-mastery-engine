@@ -75,26 +75,34 @@ DEVELOPMENT_DECISIONS: Mapping[str, GateDecision] = {
     ),
     "A2": GateDecision(
         "A2",
-        DecisionStatus.PROVISIONAL,
-        "strict aggregate improvement plus fresh confirmation for local acceptance",
+        DecisionStatus.ADOPTED,
+        (
+            "strict aggregate improvement plus fresh confirmation for local "
+            "acceptance; adopted as drafted in the Gate A approval record, 2026-09-01"
+        ),
         "ARCHITECTURE_DEFAULT",
         "locked/architecture-contract.md:section-16-A2",
         "paper-comparable public claims remain separately gated",
     ),
     "A3": GateDecision(
         "A3",
-        DecisionStatus.PROVISIONAL,
-        "trusted text-only domains",
+        DecisionStatus.ADOPTED,
+        (
+            "trusted text-only domains; adopted as drafted in the Gate A approval "
+            "record, 2026-09-01"
+        ),
         "ARCHITECTURE_DEFAULT",
         "locked/architecture-contract.md:section-16-A3",
         "artifact-producing and environment-interactive domains remain excluded",
     ),
     "A4": GateDecision(
         "A4",
-        DecisionStatus.UNRESOLVED,
+        DecisionStatus.ADOPTED,
         (
-            "free community use must preserve attribution and a project-page link "
-            "to manysaintvictormd.com; exact license instrument not selected"
+            "free community use with preserved attribution; MIT (code) plus "
+            "CC BY 4.0 (docs/methodology) selected per the Gate A approval record, "
+            "2026-09-01, Option A; the project-page link to manysaintvictormd.com "
+            "is a non-binding NOTICE.md request"
         ),
         "DIRECT_CURRENT_REQUIREMENT",
         (
@@ -102,7 +110,7 @@ DEVELOPMENT_DECISIONS: Mapping[str, GateDecision] = {
             "8245fd2d7d6205935cd948b9af01a199d82f24118854192580c75237e3e13ac8"
             "; scope:attribution-and-backlink"
         ),
-        "publication and distribution remain blocked until the exact license text is approved",
+        "publication and distribution proceed only through recorded owner action-time approvals",
     ),
     "A5": GateDecision(
         "A5",
