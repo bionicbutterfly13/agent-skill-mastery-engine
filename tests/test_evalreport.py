@@ -151,3 +151,85 @@ def test_render_eval_summary_states_scores_and_verdicts() -> None:
     assert "confirmation 0.75" in summary
     assert "ACCEPTED" in summary
     assert "observable_transcript" in summary
+
+
+def test_eval_run_refuses_missing_and_extra_phases_independently() -> None:
+    scores = (EvalTaskScore(task_id="t-1", score=1.0, output_hash="a" * 64),)
+    with pytest.raises(ContractError, match="missing=\\['confirmation'\\]"):
+        EvalRun(run_id="r", phase_scores={"baseline": scores, "validation": scores})
+    with pytest.raises(ContractError, match="extra=\\['bonus'\\]"):
+        EvalRun(
+            run_id="r",
+            phase_scores={
+                "baseline": scores,
+                "validation": scores,
+                "confirmation": scores,
+                "bonus": scores,
+            },
+        )
+
+
+def test_rollout_rows_report_exact_line_numbers_and_reject_non_objects(
+    tmp_path: Path,
+) -> None:
+    blank = tmp_path / "blank.jsonl"
+    blank.write_text(
+        '{"task_id": "arith-1", "returned_output": "<answer>4</answer>"}\n \n',
+        encoding="utf-8",
+    )
+    with pytest.raises(ContractError, match="blank.jsonl:2"):
+        run_cartridge_phase(cartridge_root=_ARITHMETIC, outputs_file=blank)
+    non_object = tmp_path / "nonobject.jsonl"
+    non_object.write_text(
+        '{"task_id": "arith-1", "returned_output": "<answer>4</answer>"}\n'
+        '["returned_output", "task_id"]\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(ContractError, match="nonobject.jsonl:2"):
+        run_cartridge_phase(cartridge_root=_ARITHMETIC, outputs_file=non_object)
+
+
+def test_cartridge_config_must_be_a_json_object(tmp_path: Path) -> None:
+    cartridge = tmp_path / "cartridge"
+    cartridge.mkdir()
+    (cartridge / "answers.jsonl").write_text(
+        '{"task_id": "t-1", "split": "test", "expected": "1", "marker": "m-1"}\n',
+        encoding="utf-8",
+    )
+    (cartridge / "cartridge.json").write_text(
+        '["extractor", "scorer"]', encoding="utf-8"
+    )
+    outputs = tmp_path / "outputs.jsonl"
+    outputs.write_text(
+        '{"task_id": "t-1", "returned_output": "<answer>1</answer>"}\n',
+        encoding="utf-8",
+    )
+    with pytest.raises(ContractError, match="cartridge config fields"):
+        run_cartridge_phase(cartridge_root=cartridge, outputs_file=outputs)
+
+
+def test_build_eval_report_rejects_boolean_seed() -> None:
+    run = _run_from_rollouts(_ARITHMETIC, "run-1")
+    with pytest.raises(ContractError, match="seed must be an integer"):
+        build_eval_report(
+            domain_id="eval-demo",
+            runs=(run,),
+            trace_fidelity="observable_transcript",
+            isolation_label="unsandboxed",
+            seed=True,
+        )
+
+
+def test_render_eval_summary_names_refusal_reasons() -> None:
+    flat = _run_from_rollouts(_ECHO, "run-1")
+    report = build_eval_report(
+        domain_id="eval-demo",
+        runs=(flat,),
+        trace_fidelity="observable_transcript",
+        isolation_label="unsandboxed",
+        seed=7,
+    )
+    summary = render_eval_summary(report)
+    assert (
+        "NOT ACCEPTED (strict_validation_and_confirmation_win_missing)" in summary
+    )

@@ -23,6 +23,7 @@ from askesis.gate2 import DEFAULT_GATE2_POLICY, compare_gate2
 from askesis.governance import (
     DEVELOPMENT_DECISIONS,
     DecisionStatus,
+    HISTORICAL_PLAN_REVISION,
     HISTORICAL_PLAN_SOUND_VERDICT,
     HISTORICAL_PLAN_STATUS,
     PAPER_ATTRIBUTION,
@@ -78,6 +79,7 @@ _EXPECTED_DEPENDENCY_CELLS = tuple(
 
 
 def test_hf_a01_revision_8_status_never_becomes_sound() -> None:
+    assert HISTORICAL_PLAN_REVISION == 8
     assert HISTORICAL_PLAN_STATUS == "NEEDS REVISION"
     assert HISTORICAL_PLAN_SOUND_VERDICT is False
 

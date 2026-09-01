@@ -173,3 +173,28 @@ def test_public_templates_require_hybrid_authoring_and_seed_provenance() -> None
     assert "2. " in skill_template
     assert "origin_observations:" in purpose_template
     assert "canonical JSON array" in purpose_template
+
+
+def test_authoring_accepts_task_observer_date_alias() -> None:
+    aliased = _skill().replace(b"last_updated: 2026-08-31\n", b"date: 2026-08-31\n")
+    metadata = validate_skill_authoring(aliased, expected_name="evidence-helper")
+    assert metadata.last_updated == "2026-08-31"
+    with pytest.raises(ContractError, match="ISO calendar date"):
+        validate_skill_authoring(
+            _skill().replace(
+                b"last_updated: 2026-08-31\n", b"date: 31 Aug 2026\n"
+            ),
+            expected_name="evidence-helper",
+        )
+
+
+def test_authoring_refuses_both_or_neither_date_field() -> None:
+    both = _skill().replace(
+        b"last_updated: 2026-08-31\n",
+        b"last_updated: 2026-08-31\ndate: 2026-08-31\n",
+    )
+    with pytest.raises(ContractError, match="exactly one"):
+        validate_skill_authoring(both, expected_name="evidence-helper")
+    neither = _skill().replace(b"last_updated: 2026-08-31\n", b"")
+    with pytest.raises(ContractError):
+        validate_skill_authoring(neither, expected_name="evidence-helper")

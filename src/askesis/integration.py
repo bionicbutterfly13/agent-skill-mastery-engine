@@ -115,8 +115,13 @@ def validate_skill_authoring(
         if key in fields or not key or not value.strip():
             raise ContractError("skill authoring frontmatter fields are invalid")
         fields[key] = value.strip()
-    required = {"name", "description", "version", "last_updated"}
-    if set(fields) != required:
+    date_keys = {"last_updated", "date"} & set(fields)
+    if len(date_keys) != 1:
+        raise ContractError(
+            "skill authoring frontmatter requires exactly one of last_updated or date"
+        )
+    date_key = date_keys.pop()
+    if set(fields) != {"name", "description", "version", date_key}:
         raise ContractError("skill authoring frontmatter fields differ from the contract")
     name = require_identifier(fields["name"], field="skill frontmatter name")
     if name != expected_name:
@@ -129,13 +134,13 @@ def validate_skill_authoring(
     version = fields["version"]
     if _SEMVER.fullmatch(version) is None:
         raise ContractError("skill version must use three-part semantic versioning")
-    last_updated = fields["last_updated"]
+    last_updated = fields[date_key]
     try:
         parsed_date = date.fromisoformat(last_updated)
     except ValueError as exc:
-        raise ContractError("skill last_updated must be an ISO calendar date") from exc
+        raise ContractError(f"skill {date_key} must be an ISO calendar date") from exc
     if parsed_date.isoformat() != last_updated:
-        raise ContractError("skill last_updated must be canonical ISO date text")
+        raise ContractError(f"skill {date_key} must be canonical ISO date text")
     trigger_headings = [index for index, line in enumerate(lines) if line == "## Triggers"]
     if len(trigger_headings) != 1:
         raise ContractError("skill must contain one ## Triggers section")

@@ -8,6 +8,7 @@ observation log, and only ever creates one new directory that must not exist.
 from __future__ import annotations
 
 from datetime import datetime
+import json
 from pathlib import Path
 from typing import Mapping
 
@@ -124,6 +125,82 @@ def build_observer_review_packet(
     for path in sorted(skill_files):
         packet[f"skill/{path}"] = skill_files[path]
     return packet
+
+
+PACKET_VERIFICATION_SCHEMA = "askesis.packet-verification.v1"
+_EXPECTED_HANDLING = {
+    "write_mode": "file_drop_create_only",
+    "shared_observation_log_write": "forbidden",
+    "installation": "human_review_required",
+}
+
+
+def verify_observer_review_packet(packet_dir: Path) -> dict[str, object]:
+    """Read-only verification of one written review packet against its manifest."""
+
+    if packet_dir.is_symlink() or not packet_dir.is_dir():
+        raise ContractError(f"observer packet directory is missing: {packet_dir}")
+    manifest_path = packet_dir / "packet-manifest.json"
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise ContractError("observer packet has no packet-manifest.json")
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ContractError("observer packet manifest is malformed") from exc
+    if not isinstance(manifest, dict) or set(manifest) != {
+        "schema",
+        "skill_name",
+        "approval",
+        "files",
+        "handling",
+    }:
+        raise ContractError("observer packet manifest fields differ from the contract")
+    if manifest["schema"] != OBSERVER_PACKET_SCHEMA:
+        raise ContractError("observer packet manifest schema differs from the contract")
+    if manifest["handling"] != _EXPECTED_HANDLING:
+        raise ContractError("observer packet handling block differs from the contract")
+    approval = manifest["approval"]
+    if not isinstance(approval, dict) or not isinstance(
+        approval.get("approval_id"), str
+    ):
+        raise ContractError("observer packet manifest has no approval identity")
+    review_doc = packet_dir / "REVIEW-PACKET.md"
+    if review_doc.is_symlink() or not review_doc.is_file():
+        raise ContractError("observer packet has no REVIEW-PACKET.md")
+    listed = manifest["files"]
+    if not isinstance(listed, list) or not listed:
+        raise ContractError("observer packet manifest lists no files")
+    expected = {"packet-manifest.json", "REVIEW-PACKET.md"}
+    for item in listed:
+        if not isinstance(item, dict) or set(item) != {"path", "sha256", "bytes"}:
+            raise ContractError("observer packet manifest file entry is invalid")
+        member = safe_member_name(item["path"])
+        if not member.startswith("skill/"):
+            raise ContractError(f"observer packet member is outside skill/: {member}")
+        target = packet_dir / member
+        if target.is_symlink() or not target.is_file():
+            raise ContractError(f"observer packet member is missing: {member}")
+        content = target.read_bytes()
+        if sha256_bytes(content) != item["sha256"] or len(content) != item["bytes"]:
+            raise ContractError(
+                f"observer packet member differs from its manifest hash: {member}"
+            )
+        expected.add(member)
+    actual = {
+        path.relative_to(packet_dir).as_posix()
+        for path in packet_dir.rglob("*")
+        if path.is_file() or path.is_symlink()
+    }
+    extra = sorted(actual - expected)
+    if extra:
+        raise ContractError(f"observer packet contains unlisted files: {extra}")
+    return {
+        "schema": PACKET_VERIFICATION_SCHEMA,
+        "skill_name": manifest["skill_name"],
+        "approval_id": approval["approval_id"],
+        "files_verified": len(listed),
+        "verified": True,
+    }
 
 
 def write_observer_review_packet(

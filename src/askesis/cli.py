@@ -22,7 +22,9 @@ from .contract import (
 )
 from .domain import load_declared_domain
 from .delivery import DeliveryWorkflow
+from .evalreport import EvalRun, build_eval_report, run_cartridge_phase
 from .lifecycle import transition_matrix
+from .observer_bridge import verify_observer_review_packet
 from .package import (
     build_projection,
     compatibility_from_mapping,
@@ -197,6 +199,26 @@ def _parser() -> argparse.ArgumentParser:
     _delivery_arguments(untested)
     untested.add_argument("--approval", type=Path, required=True)
     untested.set_defaults(handler=_package_untested)
+
+    eval_run = subcommands.add_parser(
+        "eval-run",
+        help="Score offline rollouts through one cartridge and print the A2 report",
+    )
+    eval_run.add_argument("--cartridge", type=Path, required=True)
+    eval_run.add_argument("--rollouts", type=Path, required=True)
+    eval_run.add_argument("--run-id", required=True)
+    eval_run.add_argument("--domain-id", required=True)
+    eval_run.add_argument("--seed", type=int, required=True)
+    eval_run.add_argument("--fidelity", default="observable_transcript")
+    eval_run.add_argument("--isolation", default="unsandboxed")
+    eval_run.set_defaults(handler=_eval_run)
+
+    verify_packet = subcommands.add_parser(
+        "verify-packet",
+        help="Verify one Task Observer review packet against its manifest, read-only",
+    )
+    verify_packet.add_argument("--packet", type=Path, required=True)
+    verify_packet.set_defaults(handler=_verify_packet)
 
     status = subcommands.add_parser("status", help="Read one domain state without recovery")
     _workspace_arguments(status)
@@ -471,6 +493,27 @@ def _stage_delivery(
         approval=approval,
         license_policy=args.license_policy,
     )
+
+
+def _eval_run(args: argparse.Namespace) -> Any:
+    phase_scores = {
+        phase: run_cartridge_phase(
+            cartridge_root=args.cartridge,
+            outputs_file=args.rollouts / f"{phase}.jsonl",
+        )
+        for phase in ("baseline", "validation", "confirmation")
+    }
+    return build_eval_report(
+        domain_id=args.domain_id,
+        runs=(EvalRun(run_id=args.run_id, phase_scores=phase_scores),),
+        trace_fidelity=args.fidelity,
+        isolation_label=args.isolation,
+        seed=args.seed,
+    )
+
+
+def _verify_packet(args: argparse.Namespace) -> Any:
+    return verify_observer_review_packet(args.packet)
 
 
 def _status(args: argparse.Namespace) -> Any:
