@@ -58,6 +58,44 @@ request. Provider-hidden reasoning cannot be relabelled as a paper-complete trac
 - Paper-derived method and locally authored algorithms are separated in
   [PROVENANCE.md](PROVENANCE.md); it records attribution without claiming legal novelty.
 
+## Install for Claude Code
+
+The published package carries Askesis's own agent skill (`SKILL.md`, `PURPOSE.md`,
+`NOTICE.md`, `LICENSE`, and `references/`). Installing it is a two-step, user-run
+action; nothing is installed as a side effect of `pip` or `uv`.
+
+```sh
+uv tool install askesis-agent-skill-mastery-engine
+askesis install
+```
+
+`askesis install` copies only those skill files into `~/.claude/skills/askesis`. Pass
+`--target DIR` for another skill directory, `--dry-run` to print the plan without
+writing, and `--force` to replace an existing `askesis` skill directory. The verb
+refuses any `--source` under a staging or archive root and any staged bundle, so an
+evolved candidate can never be installed this way. From a development checkout,
+`python scripts/install_claude_skill.py` does the same job.
+
+`uv tool install` places the `askesis` entry point in `~/.local/bin`; add that
+directory to `PATH` if `askesis --version` is not found.
+
+Verify:
+
+```sh
+askesis --version
+askesis install --dry-run
+ls ~/.claude/skills/askesis
+```
+
+After a restart, Claude Code lists `askesis` among its available skills.
+
+Uninstall:
+
+```sh
+rm -r ~/.claude/skills/askesis
+uv tool uninstall askesis-agent-skill-mastery-engine
+```
+
 ## Development checkout
 
 Use an isolated environment. This installs the Python package for development; it does
