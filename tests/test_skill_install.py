@@ -9,6 +9,7 @@ import sys
 import pytest
 
 from askesis.canonical import ContractError
+from askesis.cli import main
 from askesis.skill_assets import skill_files, skill_root
 from askesis.skill_install import INSTALL_SCOPE, default_target, install_skill
 
@@ -132,6 +133,30 @@ def test_install_refuses_a_staged_bundle_or_foreign_skill(tmp_path: Path) -> Non
     with pytest.raises(ContractError, match="never installed"):
         install_skill(target=tmp_path / "out", source=archive, dry_run=True)
     assert not (tmp_path / "out").exists()
+
+
+def test_cli_install_verb_emits_json_and_refuses_staging_sources(
+    tmp_path: Path, capsys
+) -> None:
+    target = tmp_path / "skills" / "askesis"
+    assert main(["install", "--target", str(target), "--dry-run"]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["schema"] == "askesis.skill-install.v1"
+    assert result["installed"] is False and not target.exists()
+
+    assert main(["install", "--target", str(target)]) == 0
+    assert json.loads(capsys.readouterr().out)["installed"] is True
+    assert (target / "SKILL.md").is_file()
+
+    assert main(["install", "--target", str(target)]) == 2
+    assert "--force" in capsys.readouterr().err
+
+    staged = _copy_source(tmp_path / "domain" / "staging" / "askesis__deadbeef0000")
+    assert main(
+        ["install", "--target", str(target), "--source", str(staged), "--force"]
+    ) == 2
+    assert "staging and archive" in capsys.readouterr().err
+    assert (target / "SKILL.md").read_bytes() == (skill_root() / "SKILL.md").read_bytes()
 
 
 def test_install_script_matches_the_cli_verb_and_dry_run_writes_nothing(

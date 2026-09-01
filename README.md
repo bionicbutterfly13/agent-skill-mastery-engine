@@ -7,8 +7,10 @@ and staging. Runtime adapters translate only measured capabilities and captured 
 
 ## Current status
 
-This tree is an uninstalled development candidate. It is not installed in Hermes,
-Claude Code, or Codex, and it has not been approved for publication or distribution.
+This tree is a development candidate. It does not install itself into Hermes, Claude
+Code, or Codex; `askesis install` is an explicit, user-run step that copies only Askesis's
+own skill files (see [Install for Claude Code](#install-for-claude-code)). The tree has
+not been approved for publication or distribution.
 The historical Claude Revision 8 remains `NEEDS REVISION`; this implementation does
 not claim a Codex `SOUND` verdict.
 
@@ -31,7 +33,7 @@ request. Provider-hidden reasoning cannot be relabelled as a paper-complete trac
 - Invalid-manifest reset, intent-first recovery, staged archives, and archive readback.
 - Pre-intent dependency rehashing plus an exact output-plan hash for every workflow command.
 - Capability-bound package labels plus validated and explicitly untested staging routes.
-  Neither route installs anything.
+  Neither route installs anything; the only install verb covers Askesis's own skill.
 - Staging lint for version, date, concrete triggers, and inherited observation provenance.
 - A read-only observation candidate bridge that preserves Task Observer ownership and
   requires human review before any shared learning record is written.
@@ -46,7 +48,8 @@ request. Provider-hidden reasoning cannot be relabelled as a paper-complete trac
   it cannot write another system's memory or observation log.
 - Only exact OpenAI-backed provider and model allowlists are accepted for prepared jobs.
 - Candidate skills are staged only. Installation and publication are separate human
-  approval gates.
+  approval gates. `askesis install` never touches a staged candidate; it installs only
+  Askesis's own `SKILL.md` and companions and refuses staging and archive sources.
 - Code is MIT licensed; docs, methodology, and templates are CC BY 4.0 (selected
   2026-09-01, Gate A decision A4, Option A). Projects using this work are asked, as a
   non-binding request, to link to manysaintvictormd.com on their project page.

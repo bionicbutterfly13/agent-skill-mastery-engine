@@ -31,6 +31,7 @@ from .package import (
     read_bundle_manifest,
     verify_archive,
 )
+from .skill_install import install_skill
 from .workflow import EvolutionWorkflow
 from .workspace import DomainWorkspace, WorkspaceLayout
 
@@ -38,7 +39,11 @@ from .workspace import DomainWorkspace, WorkspaceLayout
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="askesis",
-        description="Runtime-neutral WikiSkill core. No command installs a live skill.",
+        description=(
+            "Runtime-neutral WikiSkill core. Evolved candidates are staged, never "
+            "installed; only `install` writes a skill directory, and it copies just "
+            "Askesis's own skill."
+        ),
     )
     parser.add_argument("--version", action="version", version=__version__)
     subcommands = parser.add_subparsers(dest="command", required=True)
@@ -219,6 +224,33 @@ def _parser() -> argparse.ArgumentParser:
     )
     verify_packet.add_argument("--packet", type=Path, required=True)
     verify_packet.set_defaults(handler=_verify_packet)
+
+    install = subcommands.add_parser(
+        "install",
+        help="Copy Askesis's own skill files into a Claude Code skill directory",
+        description=(
+            "Install only Askesis's own agent skill (SKILL.md and companions). Sources "
+            "under a staging or archive root and staged bundles are refused; evolved "
+            "candidates are never installed by this command."
+        ),
+    )
+    install.add_argument(
+        "--target",
+        type=Path,
+        help="Skill directory to create (default: ~/.claude/skills/askesis)",
+    )
+    install.add_argument(
+        "--source",
+        type=Path,
+        help="Checkout holding Askesis's SKILL.md; staging and archive roots are refused",
+    )
+    install.add_argument(
+        "--force", action="store_true", help="Replace an existing askesis skill directory"
+    )
+    install.add_argument(
+        "--dry-run", action="store_true", help="Print the plan without writing anything"
+    )
+    install.set_defaults(handler=_install)
 
     status = subcommands.add_parser("status", help="Read one domain state without recovery")
     _workspace_arguments(status)
@@ -514,6 +546,15 @@ def _eval_run(args: argparse.Namespace) -> Any:
 
 def _verify_packet(args: argparse.Namespace) -> Any:
     return verify_observer_review_packet(args.packet)
+
+
+def _install(args: argparse.Namespace) -> Any:
+    return install_skill(
+        target=args.target,
+        source=args.source,
+        force=args.force,
+        dry_run=args.dry_run,
+    )
 
 
 def _status(args: argparse.Namespace) -> Any:

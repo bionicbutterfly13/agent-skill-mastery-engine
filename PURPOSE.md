@@ -32,6 +32,8 @@ compatibility with an untested Hermes, Claude Code, or Codex version.
 - No automatic modification of Task Observer, Hindsight, Second Mind, or a knowledge vault.
 - No replacement of Task Observer's live observation, confidence, clustering, immediate
   skill authoring, deprecation, or archive responsibilities.
-- No network client, paid service, provider fallback, live skill-root write, or installer.
+- No network client, paid service, provider fallback, or live skill-root write by the
+  evolution core. The only installer, `askesis install`, copies Askesis's own skill files
+  and never an evolved candidate.
 - No claim that the historical Claude Revision 8 was approved or received a Codex
   `SOUND` verdict. Its retained status is `NEEDS REVISION`.

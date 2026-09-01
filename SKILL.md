@@ -36,8 +36,10 @@ promotion, or packaging.
    report used by both manifests; delivery derives trace and isolation labels from it.
    `package-untested` needs a separate hash-bound approval and explicit untested labels.
 8. After a validated export, `observation-candidate` may print one review-only reusable
-   signal. It cannot write Task Observer or any shared log. Stop at staging because this
-   package has no install command.
+   signal. It cannot write Task Observer or any shared log. Stop at staging: no command
+   installs an evolved candidate. `askesis install` copies only Askesis's own `SKILL.md`
+   and companions into a Claude Code skill directory and refuses staging and archive
+   sources.
 
 For conformance and crash-equality runs, pass the same timezone-aware `--clock` value to
 every CLI command. The core records that value in each transaction intent.

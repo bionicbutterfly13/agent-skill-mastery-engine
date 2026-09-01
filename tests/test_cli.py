@@ -48,6 +48,7 @@ def test_cli_exposes_one_core_command_for_each_workflow_operation() -> None:
         "candidate-manifest",
         "observation-candidate",
         "transition-matrix",
+        "install",
     }
 
 
