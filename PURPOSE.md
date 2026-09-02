@@ -17,7 +17,7 @@ adapters translate only measured capabilities and captured executions.
 - hermes_trace_fidelity: unknown
 - hermes_isolation: unsandboxed
 - paper_complete_claim: false
-- live_installation: not_authorized
+- live_installation: authorized_by_owner_2026-09-02_claude_code_and_evoscientist_skill_dirs
 - license: mit_code_ccby4_docs_selected_20260901_gate_a_option_a
 - publication: blocked_pending_gate_4_owner_approval
 - distribution: blocked_pending_gate_4_owner_approval
